@@ -846,6 +846,282 @@ class CommonOperationsApi
     }
 
     /**
+     * Operation waitForNthEmail
+     *
+     * Wait for or fetch the email with a given index in the inbox specified
+     *
+     * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $index Zero based index of the email to wait for (optional)
+     *
+     * @throws \MailSlurp\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \MailSlurp\Models\Email
+     */
+    public function waitForNthEmail($inbox_id = null, $index = null)
+    {
+        list($response) = $this->waitForNthEmailWithHttpInfo($inbox_id, $index);
+        return $response;
+    }
+
+    /**
+     * Operation waitForNthEmailWithHttpInfo
+     *
+     * Wait for or fetch the email with a given index in the inbox specified
+     *
+     * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $index Zero based index of the email to wait for (optional)
+     *
+     * @throws \MailSlurp\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \MailSlurp\Models\Email, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function waitForNthEmailWithHttpInfo($inbox_id = null, $index = null)
+    {
+        $request = $this->waitForNthEmailRequest($inbox_id, $index);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            switch($statusCode) {
+                case 200:
+                    if ('\MailSlurp\Models\Email' === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\MailSlurp\Models\Email', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\MailSlurp\Models\Email';
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\MailSlurp\Models\Email',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation waitForNthEmailAsync
+     *
+     * Wait for or fetch the email with a given index in the inbox specified
+     *
+     * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $index Zero based index of the email to wait for (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function waitForNthEmailAsync($inbox_id = null, $index = null)
+    {
+        return $this->waitForNthEmailAsyncWithHttpInfo($inbox_id, $index)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation waitForNthEmailAsyncWithHttpInfo
+     *
+     * Wait for or fetch the email with a given index in the inbox specified
+     *
+     * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $index Zero based index of the email to wait for (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function waitForNthEmailAsyncWithHttpInfo($inbox_id = null, $index = null)
+    {
+        $returnType = '\MailSlurp\Models\Email';
+        $request = $this->waitForNthEmailRequest($inbox_id, $index);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'waitForNthEmail'
+     *
+     * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $index Zero based index of the email to wait for (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function waitForNthEmailRequest($inbox_id = null, $index = null)
+    {
+
+        $resourcePath = '/waitForNthEmail';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($inbox_id !== null) {
+            $queryParams['inboxId'] = ObjectSerializer::toQueryValue($inbox_id);
+        }
+        // query params
+        if ($index !== null) {
+            $queryParams['index'] = ObjectSerializer::toQueryValue($index);
+        }
+
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            if ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
+            } else {
+                $httpBody = $_tempBody;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('x-api-key');
+        if ($apiKey !== null) {
+            $headers['x-api-key'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Create http client option
      *
      * @throws \RuntimeException on file opening failure

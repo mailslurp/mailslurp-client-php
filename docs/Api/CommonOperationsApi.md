@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**createNewEmailAddress**](CommonOperationsApi.md#createNewEmailAddress) | **POST** /newEmailAddress | Create new email address
 [**sendEmailSimple**](CommonOperationsApi.md#sendEmailSimple) | **POST** /sendEmail | Send an email from a random email address
 [**waitForLatestEmail**](CommonOperationsApi.md#waitForLatestEmail) | **GET** /fetchLatestEmail | Fetch inbox&#39;s latest email or if empty wait for email to arrive
+[**waitForNthEmail**](CommonOperationsApi.md#waitForNthEmail) | **GET** /waitForNthEmail | Wait for or fetch the email with a given index in the inbox specified
 
 
 # **createNewEmailAddress**
@@ -155,6 +156,61 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **inbox_email_address** | **string**| Email address of the inbox we are fetching emails from | [optional]
  **inbox_id** | [**string**](../Model/.md)| Id of the inbox we are fetching emails from | [optional]
+
+### Return type
+
+[**\MailSlurp\Models\Email**](../Model/Email.md)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **waitForNthEmail**
+> \MailSlurp\Models\Email waitForNthEmail($inbox_id, $index)
+
+Wait for or fetch the email with a given index in the inbox specified
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+$apiInstance = new MailSlurp\Api\CommonOperationsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$inbox_id = 'inbox_id_example'; // string | Id of the inbox we are fetching emails from
+$index = 56; // int | Zero based index of the email to wait for
+
+try {
+    $result = $apiInstance->waitForNthEmail($inbox_id, $index);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling CommonOperationsApi->waitForNthEmail: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **inbox_id** | [**string**](../Model/.md)| Id of the inbox we are fetching emails from | [optional]
+ **index** | **int**| Zero based index of the email to wait for | [optional]
 
 ### Return type
 
