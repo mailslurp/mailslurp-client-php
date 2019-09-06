@@ -1,6 +1,6 @@
 <?php
 /**
- * EmailPreview
+ * MatchOption
  *
  * PHP version 5
  *
@@ -33,15 +33,14 @@ use \ArrayAccess;
 use \MailSlurp\ObjectSerializer;
 
 /**
- * EmailPreview Class Doc Comment
+ * MatchOption Class Doc Comment
  *
  * @category Class
- * @description Preview of an email message. For full message call the message endpoint with a given message id.
  * @package  MailSlurp
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class EmailPreview implements ModelInterface, ArrayAccess
+class MatchOption implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -50,7 +49,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $openAPIModelName = 'EmailPreview';
+    protected static $openAPIModelName = 'MatchOption';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,12 +57,9 @@ class EmailPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPITypes = [
-        'bcc' => 'string[]',
-        'cc' => 'string[]',
-        'created' => '\DateTime',
-        'id' => 'string',
-        'subject' => 'string',
-        'to' => 'string[]'
+        'field' => 'string',
+        'should' => 'string',
+        'value' => 'string'
     ];
 
     /**
@@ -72,12 +68,9 @@ class EmailPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPIFormats = [
-        'bcc' => null,
-        'cc' => null,
-        'created' => 'date-time',
-        'id' => 'uuid',
-        'subject' => null,
-        'to' => null
+        'field' => null,
+        'should' => null,
+        'value' => null
     ];
 
     /**
@@ -107,12 +100,9 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'bcc' => 'bcc',
-        'cc' => 'cc',
-        'created' => 'created',
-        'id' => 'id',
-        'subject' => 'subject',
-        'to' => 'to'
+        'field' => 'field',
+        'should' => 'should',
+        'value' => 'value'
     ];
 
     /**
@@ -121,12 +111,9 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'bcc' => 'setBcc',
-        'cc' => 'setCc',
-        'created' => 'setCreated',
-        'id' => 'setId',
-        'subject' => 'setSubject',
-        'to' => 'setTo'
+        'field' => 'setField',
+        'should' => 'setShould',
+        'value' => 'setValue'
     ];
 
     /**
@@ -135,12 +122,9 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'bcc' => 'getBcc',
-        'cc' => 'getCc',
-        'created' => 'getCreated',
-        'id' => 'getId',
-        'subject' => 'getSubject',
-        'to' => 'getTo'
+        'field' => 'getField',
+        'should' => 'getShould',
+        'value' => 'getValue'
     ];
 
     /**
@@ -184,8 +168,44 @@ class EmailPreview implements ModelInterface, ArrayAccess
         return self::$openAPIModelName;
     }
 
+    const FIELD_SUBJECT = 'SUBJECT';
+    const FIELD_TO = 'TO';
+    const FIELD_BCC = 'BCC';
+    const FIELD_CC = 'CC';
+    const FIELD_FROM = 'FROM';
+    const SHOULD_CONTAIN = 'CONTAIN';
+    const SHOULD_EQUAL = 'EQUAL';
     
 
+    
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getFieldAllowableValues()
+    {
+        return [
+            self::FIELD_SUBJECT,
+            self::FIELD_TO,
+            self::FIELD_BCC,
+            self::FIELD_CC,
+            self::FIELD_FROM,
+        ];
+    }
+    
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getShouldAllowableValues()
+    {
+        return [
+            self::SHOULD_CONTAIN,
+            self::SHOULD_EQUAL,
+        ];
+    }
     
 
     /**
@@ -203,12 +223,9 @@ class EmailPreview implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['bcc'] = isset($data['bcc']) ? $data['bcc'] : null;
-        $this->container['cc'] = isset($data['cc']) ? $data['cc'] : null;
-        $this->container['created'] = isset($data['created']) ? $data['created'] : null;
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['subject'] = isset($data['subject']) ? $data['subject'] : null;
-        $this->container['to'] = isset($data['to']) ? $data['to'] : null;
+        $this->container['field'] = isset($data['field']) ? $data['field'] : null;
+        $this->container['should'] = isset($data['should']) ? $data['should'] : null;
+        $this->container['value'] = isset($data['value']) ? $data['value'] : null;
     }
 
     /**
@@ -220,15 +237,22 @@ class EmailPreview implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['created'] === null) {
-            $invalidProperties[] = "'created' can't be null";
+        $allowedValues = $this->getFieldAllowableValues();
+        if (!is_null($this->container['field']) && !in_array($this->container['field'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'field', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
         }
-        if ($this->container['id'] === null) {
-            $invalidProperties[] = "'id' can't be null";
+
+        $allowedValues = $this->getShouldAllowableValues();
+        if (!is_null($this->container['should']) && !in_array($this->container['should'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'should', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
         }
-        if ($this->container['to'] === null) {
-            $invalidProperties[] = "'to' can't be null";
-        }
+
         return $invalidProperties;
     }
 
@@ -245,145 +269,91 @@ class EmailPreview implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets bcc
-     *
-     * @return string[]|null
-     */
-    public function getBcc()
-    {
-        return $this->container['bcc'];
-    }
-
-    /**
-     * Sets bcc
-     *
-     * @param string[]|null $bcc bcc
-     *
-     * @return $this
-     */
-    public function setBcc($bcc)
-    {
-        $this->container['bcc'] = $bcc;
-
-        return $this;
-    }
-
-    /**
-     * Gets cc
-     *
-     * @return string[]|null
-     */
-    public function getCc()
-    {
-        return $this->container['cc'];
-    }
-
-    /**
-     * Sets cc
-     *
-     * @param string[]|null $cc cc
-     *
-     * @return $this
-     */
-    public function setCc($cc)
-    {
-        $this->container['cc'] = $cc;
-
-        return $this;
-    }
-
-    /**
-     * Gets created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->container['created'];
-    }
-
-    /**
-     * Sets created
-     *
-     * @param \DateTime $created created
-     *
-     * @return $this
-     */
-    public function setCreated($created)
-    {
-        $this->container['created'] = $created;
-
-        return $this;
-    }
-
-    /**
-     * Gets id
-     *
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->container['id'];
-    }
-
-    /**
-     * Sets id
-     *
-     * @param string $id id
-     *
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->container['id'] = $id;
-
-        return $this;
-    }
-
-    /**
-     * Gets subject
+     * Gets field
      *
      * @return string|null
      */
-    public function getSubject()
+    public function getField()
     {
-        return $this->container['subject'];
+        return $this->container['field'];
     }
 
     /**
-     * Sets subject
+     * Sets field
      *
-     * @param string|null $subject subject
+     * @param string|null $field The email property to match on. One of SUBJECT, TO, BCC, CC or FROM
      *
      * @return $this
      */
-    public function setSubject($subject)
+    public function setField($field)
     {
-        $this->container['subject'] = $subject;
+        $allowedValues = $this->getFieldAllowableValues();
+        if (!is_null($field) && !in_array($field, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'field', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['field'] = $field;
 
         return $this;
     }
 
     /**
-     * Gets to
+     * Gets should
      *
-     * @return string[]
+     * @return string|null
      */
-    public function getTo()
+    public function getShould()
     {
-        return $this->container['to'];
+        return $this->container['should'];
     }
 
     /**
-     * Sets to
+     * Sets should
      *
-     * @param string[] $to to
+     * @param string|null $should What criteria to apply. CONTAIN or EQUAL. Note CONTAIN is recommended due to some SMTP servers adding new lines
      *
      * @return $this
      */
-    public function setTo($to)
+    public function setShould($should)
     {
-        $this->container['to'] = $to;
+        $allowedValues = $this->getShouldAllowableValues();
+        if (!is_null($should) && !in_array($should, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'should', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['should'] = $should;
+
+        return $this;
+    }
+
+    /**
+     * Gets value
+     *
+     * @return string|null
+     */
+    public function getValue()
+    {
+        return $this->container['value'];
+    }
+
+    /**
+     * Sets value
+     *
+     * @param string|null $value The value to compare to the field using EQUAL or CONTAIN
+     *
+     * @return $this
+     */
+    public function setValue($value)
+    {
+        $this->container['value'] = $value;
 
         return $this;
     }

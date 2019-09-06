@@ -1358,7 +1358,7 @@ class ExtraOperationsApi
     }
 
     /**
-     * Operation deleteEmail
+     * Operation deleteEmail1
      *
      * Delete Email
      *
@@ -1368,13 +1368,13 @@ class ExtraOperationsApi
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function deleteEmail($email_id)
+    public function deleteEmail1($email_id)
     {
-        $this->deleteEmailWithHttpInfo($email_id);
+        $this->deleteEmail1WithHttpInfo($email_id);
     }
 
     /**
-     * Operation deleteEmailWithHttpInfo
+     * Operation deleteEmail1WithHttpInfo
      *
      * Delete Email
      *
@@ -1384,9 +1384,9 @@ class ExtraOperationsApi
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteEmailWithHttpInfo($email_id)
+    public function deleteEmail1WithHttpInfo($email_id)
     {
-        $request = $this->deleteEmailRequest($email_id);
+        $request = $this->deleteEmail1Request($email_id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1426,7 +1426,7 @@ class ExtraOperationsApi
     }
 
     /**
-     * Operation deleteEmailAsync
+     * Operation deleteEmail1Async
      *
      * Delete Email
      *
@@ -1435,9 +1435,9 @@ class ExtraOperationsApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteEmailAsync($email_id)
+    public function deleteEmail1Async($email_id)
     {
-        return $this->deleteEmailAsyncWithHttpInfo($email_id)
+        return $this->deleteEmail1AsyncWithHttpInfo($email_id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1446,7 +1446,7 @@ class ExtraOperationsApi
     }
 
     /**
-     * Operation deleteEmailAsyncWithHttpInfo
+     * Operation deleteEmail1AsyncWithHttpInfo
      *
      * Delete Email
      *
@@ -1455,10 +1455,10 @@ class ExtraOperationsApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteEmailAsyncWithHttpInfo($email_id)
+    public function deleteEmail1AsyncWithHttpInfo($email_id)
     {
         $returnType = '';
-        $request = $this->deleteEmailRequest($email_id);
+        $request = $this->deleteEmail1Request($email_id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1484,19 +1484,19 @@ class ExtraOperationsApi
     }
 
     /**
-     * Create request for operation 'deleteEmail'
+     * Create request for operation 'deleteEmail1'
      *
      * @param  string $email_id emailId (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function deleteEmailRequest($email_id)
+    protected function deleteEmail1Request($email_id)
     {
         // verify the required parameter 'email_id' is set
         if ($email_id === null || (is_array($email_id) && count($email_id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $email_id when calling deleteEmail'
+                'Missing the required parameter $email_id when calling deleteEmail1'
             );
         }
 

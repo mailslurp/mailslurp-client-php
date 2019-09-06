@@ -5,8 +5,13 @@ All URIs are relative to *https://api.mailslurp.com*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createNewEmailAddress**](CommonOperationsApi.md#createNewEmailAddress) | **POST** /newEmailAddress | Create new email address
+[**deleteEmail**](CommonOperationsApi.md#deleteEmail) | **DELETE** /deleteEmail | Delete an email
+[**deleteEmailAddress**](CommonOperationsApi.md#deleteEmailAddress) | **DELETE** /deleteEmailAddress | Delete email address and its emails
+[**emptyInbox**](CommonOperationsApi.md#emptyInbox) | **DELETE** /emptyInbox | Delete all emails in an inbox
 [**sendEmailSimple**](CommonOperationsApi.md#sendEmailSimple) | **POST** /sendEmail | Send an email from a random email address
-[**waitForLatestEmail**](CommonOperationsApi.md#waitForLatestEmail) | **GET** /fetchLatestEmail | Fetch inbox&#39;s latest email or if empty wait for email to arrive
+[**waitForEmailCount**](CommonOperationsApi.md#waitForEmailCount) | **GET** /waitForEmailCount | Wait for and return count number of emails
+[**waitForLatestEmail**](CommonOperationsApi.md#waitForLatestEmail) | **GET** /waitForLatestEmail | Fetch inbox&#39;s latest email or if empty wait for email to arrive
+[**waitForMatchingEmail**](CommonOperationsApi.md#waitForMatchingEmail) | **POST** /waitForMatchingEmails | Wait or return list of emails that match simple matching patterns
 [**waitForNthEmail**](CommonOperationsApi.md#waitForNthEmail) | **GET** /waitForNthEmail | Wait for or fetch the email with a given index in the inbox specified
 
 
@@ -58,6 +63,168 @@ This endpoint does not need any parameter.
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **deleteEmail**
+> deleteEmail($email_id)
+
+Delete an email
+
+Deletes an email
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+$apiInstance = new MailSlurp\Api\CommonOperationsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email_id = 'email_id_example'; // string | emailId
+
+try {
+    $apiInstance->deleteEmail($email_id);
+} catch (Exception $e) {
+    echo 'Exception when calling CommonOperationsApi->deleteEmail: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_id** | [**string**](../Model/.md)| emailId |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **deleteEmailAddress**
+> deleteEmailAddress($inbox_id)
+
+Delete email address and its emails
+
+Deletes an inbox
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+$apiInstance = new MailSlurp\Api\CommonOperationsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$inbox_id = 'inbox_id_example'; // string | inboxId
+
+try {
+    $apiInstance->deleteEmailAddress($inbox_id);
+} catch (Exception $e) {
+    echo 'Exception when calling CommonOperationsApi->deleteEmailAddress: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **inbox_id** | [**string**](../Model/.md)| inboxId |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **emptyInbox**
+> emptyInbox($inbox_id)
+
+Delete all emails in an inbox
+
+Deletes all emails
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+$apiInstance = new MailSlurp\Api\CommonOperationsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$inbox_id = 'inbox_id_example'; // string | inboxId
+
+try {
+    $apiInstance->emptyInbox($inbox_id);
+} catch (Exception $e) {
+    echo 'Exception when calling CommonOperationsApi->emptyInbox: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **inbox_id** | [**string**](../Model/.md)| inboxId |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -115,8 +282,67 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
+# **waitForEmailCount**
+> \MailSlurp\Models\EmailPreview[] waitForEmailCount($count, $inbox_id, $timeout)
+
+Wait for and return count number of emails
+
+Will only wait if count is greater that the found emails in given inbox.If you need to wait for an email for a non-empty inbox see the other receive methods.
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+$apiInstance = new MailSlurp\Api\CommonOperationsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$count = 56; // int | Number of emails to wait for. Must be greater that 1
+$inbox_id = 'inbox_id_example'; // string | Id of the inbox we are fetching emails from
+$timeout = 56; // int | Max milliseconds to wait
+
+try {
+    $result = $apiInstance->waitForEmailCount($count, $inbox_id, $timeout);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling CommonOperationsApi->waitForEmailCount: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **count** | **int**| Number of emails to wait for. Must be greater that 1 | [optional]
+ **inbox_id** | [**string**](../Model/.md)| Id of the inbox we are fetching emails from | [optional]
+ **timeout** | **int**| Max milliseconds to wait | [optional]
+
+### Return type
+
+[**\MailSlurp\Models\EmailPreview[]**](../Model/EmailPreview.md)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
 # **waitForLatestEmail**
-> \MailSlurp\Models\Email waitForLatestEmail($inbox_email_address, $inbox_id)
+> \MailSlurp\Models\Email waitForLatestEmail($inbox_id, $timeout)
 
 Fetch inbox's latest email or if empty wait for email to arrive
 
@@ -138,11 +364,11 @@ $apiInstance = new MailSlurp\Api\CommonOperationsApi(
     new GuzzleHttp\Client(),
     $config
 );
-$inbox_email_address = 'inbox_email_address_example'; // string | Email address of the inbox we are fetching emails from
 $inbox_id = 'inbox_id_example'; // string | Id of the inbox we are fetching emails from
+$timeout = 56; // int | Max milliseconds to wait
 
 try {
-    $result = $apiInstance->waitForLatestEmail($inbox_email_address, $inbox_id);
+    $result = $apiInstance->waitForLatestEmail($inbox_id, $timeout);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CommonOperationsApi->waitForLatestEmail: ', $e->getMessage(), PHP_EOL;
@@ -154,8 +380,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **inbox_email_address** | **string**| Email address of the inbox we are fetching emails from | [optional]
  **inbox_id** | [**string**](../Model/.md)| Id of the inbox we are fetching emails from | [optional]
+ **timeout** | **int**| Max milliseconds to wait | [optional]
 
 ### Return type
 
@@ -172,8 +398,69 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
+# **waitForMatchingEmail**
+> \MailSlurp\Models\EmailPreview[] waitForMatchingEmail($match_options, $count, $inbox_id, $timeout)
+
+Wait or return list of emails that match simple matching patterns
+
+Results must also meet provided count. Match options allow simple CONTAINS or EQUALS filtering on SUBJECT, TO, BCC, CC, and FROM.
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+$apiInstance = new MailSlurp\Api\CommonOperationsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$match_options = new \MailSlurp\Models\MatchOptions(); // \MailSlurp\Models\MatchOptions | matchOptions
+$count = 56; // int | Number of emails to wait for. Must be greater that 1
+$inbox_id = 'inbox_id_example'; // string | Id of the inbox we are fetching emails from
+$timeout = 56; // int | Max milliseconds to wait
+
+try {
+    $result = $apiInstance->waitForMatchingEmail($match_options, $count, $inbox_id, $timeout);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling CommonOperationsApi->waitForMatchingEmail: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **match_options** | [**\MailSlurp\Models\MatchOptions**](../Model/MatchOptions.md)| matchOptions |
+ **count** | **int**| Number of emails to wait for. Must be greater that 1 | [optional]
+ **inbox_id** | [**string**](../Model/.md)| Id of the inbox we are fetching emails from | [optional]
+ **timeout** | **int**| Max milliseconds to wait | [optional]
+
+### Return type
+
+[**\MailSlurp\Models\EmailPreview[]**](../Model/EmailPreview.md)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
 # **waitForNthEmail**
-> \MailSlurp\Models\Email waitForNthEmail($inbox_id, $index)
+> \MailSlurp\Models\Email waitForNthEmail($inbox_id, $index, $timeout)
 
 Wait for or fetch the email with a given index in the inbox specified
 
@@ -195,9 +482,10 @@ $apiInstance = new MailSlurp\Api\CommonOperationsApi(
 );
 $inbox_id = 'inbox_id_example'; // string | Id of the inbox we are fetching emails from
 $index = 56; // int | Zero based index of the email to wait for
+$timeout = 56; // int | Max milliseconds to wait
 
 try {
-    $result = $apiInstance->waitForNthEmail($inbox_id, $index);
+    $result = $apiInstance->waitForNthEmail($inbox_id, $index, $timeout);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CommonOperationsApi->waitForNthEmail: ', $e->getMessage(), PHP_EOL;
@@ -211,6 +499,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **inbox_id** | [**string**](../Model/.md)| Id of the inbox we are fetching emails from | [optional]
  **index** | **int**| Zero based index of the email to wait for | [optional]
+ **timeout** | **int**| Max milliseconds to wait | [optional]
 
 ### Return type
 

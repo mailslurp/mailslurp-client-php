@@ -1,6 +1,6 @@
 {
     "name": "mailslurp/mailslurp-client-php",
-    "version": "4.4.0",
+    "version": "4.5.0",
     "description": "For documentation see [developer guide](https://www.mailslurp.com/developers). [Create an account](https://app.mailslurp.com) in the MailSlurp Dashboard to [view your API Key](https://app). For all bugs, feature requests, or help please [see support](https://www.mailslurp.com/support/).",
     "keywords": [
         "openapitools",
