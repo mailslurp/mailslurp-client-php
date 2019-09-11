@@ -4242,7 +4242,7 @@ class ExtraOperationsApi
      *
      * @throws \MailSlurp\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return string
+     * @return string[]
      */
     public function uploadAttachment($upload_attachment_options)
     {
@@ -4259,7 +4259,7 @@ class ExtraOperationsApi
      *
      * @throws \MailSlurp\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of string, HTTP status code, HTTP response headers (array of strings)
+     * @return array of string[], HTTP status code, HTTP response headers (array of strings)
      */
     public function uploadAttachmentWithHttpInfo($upload_attachment_options)
     {
@@ -4296,20 +4296,20 @@ class ExtraOperationsApi
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 201:
-                    if ('string' === '\SplFileObject') {
+                    if ('string[]' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, 'string', []),
+                        ObjectSerializer::deserialize($content, 'string[]', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = 'string';
+            $returnType = 'string[]';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -4328,7 +4328,7 @@ class ExtraOperationsApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        'string',
+                        'string[]',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4370,7 +4370,7 @@ class ExtraOperationsApi
      */
     public function uploadAttachmentAsyncWithHttpInfo($upload_attachment_options)
     {
-        $returnType = 'string';
+        $returnType = 'string[]';
         $request = $this->uploadAttachmentRequest($upload_attachment_options);
 
         return $this->client
@@ -4516,7 +4516,7 @@ class ExtraOperationsApi
      *
      * @throws \MailSlurp\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return string
+     * @return string[]
      */
     public function uploadMultipartForm($file, $content_type = null, $filename = null)
     {
@@ -4535,7 +4535,7 @@ class ExtraOperationsApi
      *
      * @throws \MailSlurp\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of string, HTTP status code, HTTP response headers (array of strings)
+     * @return array of string[], HTTP status code, HTTP response headers (array of strings)
      */
     public function uploadMultipartFormWithHttpInfo($file, $content_type = null, $filename = null)
     {
@@ -4572,20 +4572,20 @@ class ExtraOperationsApi
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 201:
-                    if ('string' === '\SplFileObject') {
+                    if ('string[]' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, 'string', []),
+                        ObjectSerializer::deserialize($content, 'string[]', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = 'string';
+            $returnType = 'string[]';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -4604,7 +4604,7 @@ class ExtraOperationsApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        'string',
+                        'string[]',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4650,7 +4650,7 @@ class ExtraOperationsApi
      */
     public function uploadMultipartFormAsyncWithHttpInfo($file, $content_type = null, $filename = null)
     {
-        $returnType = 'string';
+        $returnType = 'string[]';
         $request = $this->uploadMultipartFormRequest($file, $content_type, $filename);
 
         return $this->client

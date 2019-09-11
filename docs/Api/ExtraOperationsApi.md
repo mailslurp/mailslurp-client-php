@@ -902,7 +902,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **uploadAttachment**
-> string uploadAttachment($upload_attachment_options)
+> string[] uploadAttachment($upload_attachment_options)
 
 Upload an attachment for sending
 
@@ -943,7 +943,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**string**
+**string[]**
 
 ### Authorization
 
@@ -957,7 +957,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **uploadMultipartForm**
-> string uploadMultipartForm($file, $content_type, $filename)
+> string[] uploadMultipartForm($file, $content_type, $filename)
 
 Upload an attachment for sending using Multipart Form
 
@@ -1002,7 +1002,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**string**
+**string[]**
 
 ### Authorization
 
