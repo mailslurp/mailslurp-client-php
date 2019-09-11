@@ -58,6 +58,7 @@ class SendEmailOptions implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPITypes = [
+        'attachments' => 'string[]',
         'bcc' => 'string[]',
         'body' => 'string',
         'cc' => 'string[]',
@@ -75,6 +76,7 @@ class SendEmailOptions implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPIFormats = [
+        'attachments' => null,
         'bcc' => null,
         'body' => null,
         'cc' => null,
@@ -113,6 +115,7 @@ class SendEmailOptions implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
+        'attachments' => 'attachments',
         'bcc' => 'bcc',
         'body' => 'body',
         'cc' => 'cc',
@@ -130,6 +133,7 @@ class SendEmailOptions implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
+        'attachments' => 'setAttachments',
         'bcc' => 'setBcc',
         'body' => 'setBody',
         'cc' => 'setCc',
@@ -147,6 +151,7 @@ class SendEmailOptions implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
+        'attachments' => 'getAttachments',
         'bcc' => 'getBcc',
         'body' => 'getBody',
         'cc' => 'getCc',
@@ -218,6 +223,7 @@ class SendEmailOptions implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
+        $this->container['attachments'] = isset($data['attachments']) ? $data['attachments'] : null;
         $this->container['bcc'] = isset($data['bcc']) ? $data['bcc'] : null;
         $this->container['body'] = isset($data['body']) ? $data['body'] : null;
         $this->container['cc'] = isset($data['cc']) ? $data['cc'] : null;
@@ -255,6 +261,30 @@ class SendEmailOptions implements ModelInterface, ArrayAccess
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets attachments
+     *
+     * @return string[]|null
+     */
+    public function getAttachments()
+    {
+        return $this->container['attachments'];
+    }
+
+    /**
+     * Sets attachments
+     *
+     * @param string[]|null $attachments Optional list of attachment IDs to send with this email
+     *
+     * @return $this
+     */
+    public function setAttachments($attachments)
+    {
+        $this->container['attachments'] = $attachments;
+
+        return $this;
+    }
 
     /**
      * Gets bcc

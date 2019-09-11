@@ -1,6 +1,6 @@
 <?php
 /**
- * EmailPreview
+ * MatchOptions
  *
  * PHP version 5
  *
@@ -33,15 +33,15 @@ use \ArrayAccess;
 use \MailSlurp\ObjectSerializer;
 
 /**
- * EmailPreview Class Doc Comment
+ * MatchOptions Class Doc Comment
  *
  * @category Class
- * @description Preview of an email message. For full message call the message endpoint with a given message id.
+ * @description Optional filter for matching emails based on fields
  * @package  MailSlurp
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class EmailPreview implements ModelInterface, ArrayAccess
+class MatchOptions implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -50,7 +50,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $openAPIModelName = 'EmailPreview';
+    protected static $openAPIModelName = 'MatchOptions';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,12 +58,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPITypes = [
-        'bcc' => 'string[]',
-        'cc' => 'string[]',
-        'created' => '\DateTime',
-        'id' => 'string',
-        'subject' => 'string',
-        'to' => 'string[]'
+        'matches' => '\MailSlurp\Models\MatchOption[]'
     ];
 
     /**
@@ -72,12 +67,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPIFormats = [
-        'bcc' => null,
-        'cc' => null,
-        'created' => 'date-time',
-        'id' => 'uuid',
-        'subject' => null,
-        'to' => null
+        'matches' => null
     ];
 
     /**
@@ -107,12 +97,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'bcc' => 'bcc',
-        'cc' => 'cc',
-        'created' => 'created',
-        'id' => 'id',
-        'subject' => 'subject',
-        'to' => 'to'
+        'matches' => 'matches'
     ];
 
     /**
@@ -121,12 +106,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'bcc' => 'setBcc',
-        'cc' => 'setCc',
-        'created' => 'setCreated',
-        'id' => 'setId',
-        'subject' => 'setSubject',
-        'to' => 'setTo'
+        'matches' => 'setMatches'
     ];
 
     /**
@@ -135,12 +115,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'bcc' => 'getBcc',
-        'cc' => 'getCc',
-        'created' => 'getCreated',
-        'id' => 'getId',
-        'subject' => 'getSubject',
-        'to' => 'getTo'
+        'matches' => 'getMatches'
     ];
 
     /**
@@ -203,12 +178,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['bcc'] = isset($data['bcc']) ? $data['bcc'] : null;
-        $this->container['cc'] = isset($data['cc']) ? $data['cc'] : null;
-        $this->container['created'] = isset($data['created']) ? $data['created'] : null;
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['subject'] = isset($data['subject']) ? $data['subject'] : null;
-        $this->container['to'] = isset($data['to']) ? $data['to'] : null;
+        $this->container['matches'] = isset($data['matches']) ? $data['matches'] : null;
     }
 
     /**
@@ -220,15 +190,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['created'] === null) {
-            $invalidProperties[] = "'created' can't be null";
-        }
-        if ($this->container['id'] === null) {
-            $invalidProperties[] = "'id' can't be null";
-        }
-        if ($this->container['to'] === null) {
-            $invalidProperties[] = "'to' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -245,145 +206,25 @@ class EmailPreview implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets bcc
+     * Gets matches
      *
-     * @return string[]|null
+     * @return \MailSlurp\Models\MatchOption[]|null
      */
-    public function getBcc()
+    public function getMatches()
     {
-        return $this->container['bcc'];
+        return $this->container['matches'];
     }
 
     /**
-     * Sets bcc
+     * Sets matches
      *
-     * @param string[]|null $bcc bcc
+     * @param \MailSlurp\Models\MatchOption[]|null $matches 1 or more match options. Options are additive so if one does not match the email is excluded from results
      *
      * @return $this
      */
-    public function setBcc($bcc)
+    public function setMatches($matches)
     {
-        $this->container['bcc'] = $bcc;
-
-        return $this;
-    }
-
-    /**
-     * Gets cc
-     *
-     * @return string[]|null
-     */
-    public function getCc()
-    {
-        return $this->container['cc'];
-    }
-
-    /**
-     * Sets cc
-     *
-     * @param string[]|null $cc cc
-     *
-     * @return $this
-     */
-    public function setCc($cc)
-    {
-        $this->container['cc'] = $cc;
-
-        return $this;
-    }
-
-    /**
-     * Gets created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->container['created'];
-    }
-
-    /**
-     * Sets created
-     *
-     * @param \DateTime $created created
-     *
-     * @return $this
-     */
-    public function setCreated($created)
-    {
-        $this->container['created'] = $created;
-
-        return $this;
-    }
-
-    /**
-     * Gets id
-     *
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->container['id'];
-    }
-
-    /**
-     * Sets id
-     *
-     * @param string $id id
-     *
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->container['id'] = $id;
-
-        return $this;
-    }
-
-    /**
-     * Gets subject
-     *
-     * @return string|null
-     */
-    public function getSubject()
-    {
-        return $this->container['subject'];
-    }
-
-    /**
-     * Sets subject
-     *
-     * @param string|null $subject subject
-     *
-     * @return $this
-     */
-    public function setSubject($subject)
-    {
-        $this->container['subject'] = $subject;
-
-        return $this;
-    }
-
-    /**
-     * Gets to
-     *
-     * @return string[]
-     */
-    public function getTo()
-    {
-        return $this->container['to'];
-    }
-
-    /**
-     * Sets to
-     *
-     * @param string[] $to to
-     *
-     * @return $this
-     */
-    public function setTo($to)
-    {
-        $this->container['to'] = $to;
+        $this->container['matches'] = $matches;
 
         return $this;
     }

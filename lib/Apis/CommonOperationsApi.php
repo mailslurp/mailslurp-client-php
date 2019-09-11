@@ -346,6 +346,231 @@ class CommonOperationsApi
     }
 
     /**
+     * Operation deleteEmail
+     *
+     * Delete an email
+     *
+     * @param  string $email_id emailId (required)
+     *
+     * @throws \MailSlurp\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function deleteEmail($email_id)
+    {
+        $this->deleteEmailWithHttpInfo($email_id);
+    }
+
+    /**
+     * Operation deleteEmailWithHttpInfo
+     *
+     * Delete an email
+     *
+     * @param  string $email_id emailId (required)
+     *
+     * @throws \MailSlurp\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function deleteEmailWithHttpInfo($email_id)
+    {
+        $request = $this->deleteEmailRequest($email_id);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            return [null, $statusCode, $response->getHeaders()];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation deleteEmailAsync
+     *
+     * Delete an email
+     *
+     * @param  string $email_id emailId (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deleteEmailAsync($email_id)
+    {
+        return $this->deleteEmailAsyncWithHttpInfo($email_id)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation deleteEmailAsyncWithHttpInfo
+     *
+     * Delete an email
+     *
+     * @param  string $email_id emailId (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deleteEmailAsyncWithHttpInfo($email_id)
+    {
+        $returnType = '';
+        $request = $this->deleteEmailRequest($email_id);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'deleteEmail'
+     *
+     * @param  string $email_id emailId (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function deleteEmailRequest($email_id)
+    {
+        // verify the required parameter 'email_id' is set
+        if ($email_id === null || (is_array($email_id) && count($email_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $email_id when calling deleteEmail'
+            );
+        }
+
+        $resourcePath = '/deleteEmail';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($email_id !== null) {
+            $queryParams['emailId'] = ObjectSerializer::toQueryValue($email_id);
+        }
+
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            if ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
+            } else {
+                $httpBody = $_tempBody;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('x-api-key');
+        if ($apiKey !== null) {
+            $headers['x-api-key'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'DELETE',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation deleteEmailAddress
      *
      * Delete email address and its emails
@@ -489,6 +714,231 @@ class CommonOperationsApi
         }
 
         $resourcePath = '/deleteEmailAddress';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($inbox_id !== null) {
+            $queryParams['inboxId'] = ObjectSerializer::toQueryValue($inbox_id);
+        }
+
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            if ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
+            } else {
+                $httpBody = $_tempBody;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('x-api-key');
+        if ($apiKey !== null) {
+            $headers['x-api-key'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'DELETE',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation emptyInbox
+     *
+     * Delete all emails in an inbox
+     *
+     * @param  string $inbox_id inboxId (required)
+     *
+     * @throws \MailSlurp\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function emptyInbox($inbox_id)
+    {
+        $this->emptyInboxWithHttpInfo($inbox_id);
+    }
+
+    /**
+     * Operation emptyInboxWithHttpInfo
+     *
+     * Delete all emails in an inbox
+     *
+     * @param  string $inbox_id inboxId (required)
+     *
+     * @throws \MailSlurp\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function emptyInboxWithHttpInfo($inbox_id)
+    {
+        $request = $this->emptyInboxRequest($inbox_id);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            return [null, $statusCode, $response->getHeaders()];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation emptyInboxAsync
+     *
+     * Delete all emails in an inbox
+     *
+     * @param  string $inbox_id inboxId (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function emptyInboxAsync($inbox_id)
+    {
+        return $this->emptyInboxAsyncWithHttpInfo($inbox_id)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation emptyInboxAsyncWithHttpInfo
+     *
+     * Delete all emails in an inbox
+     *
+     * @param  string $inbox_id inboxId (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function emptyInboxAsyncWithHttpInfo($inbox_id)
+    {
+        $returnType = '';
+        $request = $this->emptyInboxRequest($inbox_id);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'emptyInbox'
+     *
+     * @param  string $inbox_id inboxId (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function emptyInboxRequest($inbox_id)
+    {
+        // verify the required parameter 'inbox_id' is set
+        if ($inbox_id === null || (is_array($inbox_id) && count($inbox_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $inbox_id when calling emptyInbox'
+            );
+        }
+
+        $resourcePath = '/emptyInbox';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -795,20 +1245,305 @@ class CommonOperationsApi
     }
 
     /**
+     * Operation waitForEmailCount
+     *
+     * Wait for and return count number of emails
+     *
+     * @param  int $count Number of emails to wait for. Must be greater that 1 (optional)
+     * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
+     *
+     * @throws \MailSlurp\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \MailSlurp\Models\EmailPreview[]
+     */
+    public function waitForEmailCount($count = null, $inbox_id = null, $timeout = null)
+    {
+        list($response) = $this->waitForEmailCountWithHttpInfo($count, $inbox_id, $timeout);
+        return $response;
+    }
+
+    /**
+     * Operation waitForEmailCountWithHttpInfo
+     *
+     * Wait for and return count number of emails
+     *
+     * @param  int $count Number of emails to wait for. Must be greater that 1 (optional)
+     * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
+     *
+     * @throws \MailSlurp\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \MailSlurp\Models\EmailPreview[], HTTP status code, HTTP response headers (array of strings)
+     */
+    public function waitForEmailCountWithHttpInfo($count = null, $inbox_id = null, $timeout = null)
+    {
+        $request = $this->waitForEmailCountRequest($count, $inbox_id, $timeout);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            switch($statusCode) {
+                case 200:
+                    if ('\MailSlurp\Models\EmailPreview[]' === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\MailSlurp\Models\EmailPreview[]', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\MailSlurp\Models\EmailPreview[]';
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\MailSlurp\Models\EmailPreview[]',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation waitForEmailCountAsync
+     *
+     * Wait for and return count number of emails
+     *
+     * @param  int $count Number of emails to wait for. Must be greater that 1 (optional)
+     * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function waitForEmailCountAsync($count = null, $inbox_id = null, $timeout = null)
+    {
+        return $this->waitForEmailCountAsyncWithHttpInfo($count, $inbox_id, $timeout)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation waitForEmailCountAsyncWithHttpInfo
+     *
+     * Wait for and return count number of emails
+     *
+     * @param  int $count Number of emails to wait for. Must be greater that 1 (optional)
+     * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function waitForEmailCountAsyncWithHttpInfo($count = null, $inbox_id = null, $timeout = null)
+    {
+        $returnType = '\MailSlurp\Models\EmailPreview[]';
+        $request = $this->waitForEmailCountRequest($count, $inbox_id, $timeout);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'waitForEmailCount'
+     *
+     * @param  int $count Number of emails to wait for. Must be greater that 1 (optional)
+     * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function waitForEmailCountRequest($count = null, $inbox_id = null, $timeout = null)
+    {
+
+        $resourcePath = '/waitForEmailCount';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($count !== null) {
+            $queryParams['count'] = ObjectSerializer::toQueryValue($count);
+        }
+        // query params
+        if ($inbox_id !== null) {
+            $queryParams['inboxId'] = ObjectSerializer::toQueryValue($inbox_id);
+        }
+        // query params
+        if ($timeout !== null) {
+            $queryParams['timeout'] = ObjectSerializer::toQueryValue($timeout);
+        }
+
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            if ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
+            } else {
+                $httpBody = $_tempBody;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('x-api-key');
+        if ($apiKey !== null) {
+            $headers['x-api-key'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation waitForLatestEmail
      *
      * Fetch inbox's latest email or if empty wait for email to arrive
      *
-     * @param  string $inbox_email_address Email address of the inbox we are fetching emails from (optional)
      * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
      *
      * @throws \MailSlurp\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \MailSlurp\Models\Email
      */
-    public function waitForLatestEmail($inbox_email_address = null, $inbox_id = null)
+    public function waitForLatestEmail($inbox_id = null, $timeout = null)
     {
-        list($response) = $this->waitForLatestEmailWithHttpInfo($inbox_email_address, $inbox_id);
+        list($response) = $this->waitForLatestEmailWithHttpInfo($inbox_id, $timeout);
         return $response;
     }
 
@@ -817,16 +1552,16 @@ class CommonOperationsApi
      *
      * Fetch inbox's latest email or if empty wait for email to arrive
      *
-     * @param  string $inbox_email_address Email address of the inbox we are fetching emails from (optional)
      * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
      *
      * @throws \MailSlurp\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \MailSlurp\Models\Email, HTTP status code, HTTP response headers (array of strings)
      */
-    public function waitForLatestEmailWithHttpInfo($inbox_email_address = null, $inbox_id = null)
+    public function waitForLatestEmailWithHttpInfo($inbox_id = null, $timeout = null)
     {
-        $request = $this->waitForLatestEmailRequest($inbox_email_address, $inbox_id);
+        $request = $this->waitForLatestEmailRequest($inbox_id, $timeout);
 
         try {
             $options = $this->createHttpClientOption();
@@ -906,15 +1641,15 @@ class CommonOperationsApi
      *
      * Fetch inbox's latest email or if empty wait for email to arrive
      *
-     * @param  string $inbox_email_address Email address of the inbox we are fetching emails from (optional)
      * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function waitForLatestEmailAsync($inbox_email_address = null, $inbox_id = null)
+    public function waitForLatestEmailAsync($inbox_id = null, $timeout = null)
     {
-        return $this->waitForLatestEmailAsyncWithHttpInfo($inbox_email_address, $inbox_id)
+        return $this->waitForLatestEmailAsyncWithHttpInfo($inbox_id, $timeout)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -927,16 +1662,16 @@ class CommonOperationsApi
      *
      * Fetch inbox's latest email or if empty wait for email to arrive
      *
-     * @param  string $inbox_email_address Email address of the inbox we are fetching emails from (optional)
      * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function waitForLatestEmailAsyncWithHttpInfo($inbox_email_address = null, $inbox_id = null)
+    public function waitForLatestEmailAsyncWithHttpInfo($inbox_id = null, $timeout = null)
     {
         $returnType = '\MailSlurp\Models\Email';
-        $request = $this->waitForLatestEmailRequest($inbox_email_address, $inbox_id);
+        $request = $this->waitForLatestEmailRequest($inbox_id, $timeout);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -975,16 +1710,16 @@ class CommonOperationsApi
     /**
      * Create request for operation 'waitForLatestEmail'
      *
-     * @param  string $inbox_email_address Email address of the inbox we are fetching emails from (optional)
      * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function waitForLatestEmailRequest($inbox_email_address = null, $inbox_id = null)
+    protected function waitForLatestEmailRequest($inbox_id = null, $timeout = null)
     {
 
-        $resourcePath = '/fetchLatestEmail';
+        $resourcePath = '/waitForLatestEmail';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -992,12 +1727,12 @@ class CommonOperationsApi
         $multipart = false;
 
         // query params
-        if ($inbox_email_address !== null) {
-            $queryParams['inboxEmailAddress'] = ObjectSerializer::toQueryValue($inbox_email_address);
-        }
-        // query params
         if ($inbox_id !== null) {
             $queryParams['inboxId'] = ObjectSerializer::toQueryValue($inbox_id);
+        }
+        // query params
+        if ($timeout !== null) {
+            $queryParams['timeout'] = ObjectSerializer::toQueryValue($timeout);
         }
 
 
@@ -1071,20 +1806,320 @@ class CommonOperationsApi
     }
 
     /**
+     * Operation waitForMatchingEmail
+     *
+     * Wait or return list of emails that match simple matching patterns
+     *
+     * @param  \MailSlurp\Models\MatchOptions $match_options matchOptions (required)
+     * @param  int $count Number of emails to wait for. Must be greater that 1 (optional)
+     * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
+     *
+     * @throws \MailSlurp\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \MailSlurp\Models\EmailPreview[]
+     */
+    public function waitForMatchingEmail($match_options, $count = null, $inbox_id = null, $timeout = null)
+    {
+        list($response) = $this->waitForMatchingEmailWithHttpInfo($match_options, $count, $inbox_id, $timeout);
+        return $response;
+    }
+
+    /**
+     * Operation waitForMatchingEmailWithHttpInfo
+     *
+     * Wait or return list of emails that match simple matching patterns
+     *
+     * @param  \MailSlurp\Models\MatchOptions $match_options matchOptions (required)
+     * @param  int $count Number of emails to wait for. Must be greater that 1 (optional)
+     * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
+     *
+     * @throws \MailSlurp\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \MailSlurp\Models\EmailPreview[], HTTP status code, HTTP response headers (array of strings)
+     */
+    public function waitForMatchingEmailWithHttpInfo($match_options, $count = null, $inbox_id = null, $timeout = null)
+    {
+        $request = $this->waitForMatchingEmailRequest($match_options, $count, $inbox_id, $timeout);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            switch($statusCode) {
+                case 200:
+                    if ('\MailSlurp\Models\EmailPreview[]' === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\MailSlurp\Models\EmailPreview[]', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\MailSlurp\Models\EmailPreview[]';
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\MailSlurp\Models\EmailPreview[]',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation waitForMatchingEmailAsync
+     *
+     * Wait or return list of emails that match simple matching patterns
+     *
+     * @param  \MailSlurp\Models\MatchOptions $match_options matchOptions (required)
+     * @param  int $count Number of emails to wait for. Must be greater that 1 (optional)
+     * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function waitForMatchingEmailAsync($match_options, $count = null, $inbox_id = null, $timeout = null)
+    {
+        return $this->waitForMatchingEmailAsyncWithHttpInfo($match_options, $count, $inbox_id, $timeout)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation waitForMatchingEmailAsyncWithHttpInfo
+     *
+     * Wait or return list of emails that match simple matching patterns
+     *
+     * @param  \MailSlurp\Models\MatchOptions $match_options matchOptions (required)
+     * @param  int $count Number of emails to wait for. Must be greater that 1 (optional)
+     * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function waitForMatchingEmailAsyncWithHttpInfo($match_options, $count = null, $inbox_id = null, $timeout = null)
+    {
+        $returnType = '\MailSlurp\Models\EmailPreview[]';
+        $request = $this->waitForMatchingEmailRequest($match_options, $count, $inbox_id, $timeout);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'waitForMatchingEmail'
+     *
+     * @param  \MailSlurp\Models\MatchOptions $match_options matchOptions (required)
+     * @param  int $count Number of emails to wait for. Must be greater that 1 (optional)
+     * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function waitForMatchingEmailRequest($match_options, $count = null, $inbox_id = null, $timeout = null)
+    {
+        // verify the required parameter 'match_options' is set
+        if ($match_options === null || (is_array($match_options) && count($match_options) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $match_options when calling waitForMatchingEmail'
+            );
+        }
+
+        $resourcePath = '/waitForMatchingEmails';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($count !== null) {
+            $queryParams['count'] = ObjectSerializer::toQueryValue($count);
+        }
+        // query params
+        if ($inbox_id !== null) {
+            $queryParams['inboxId'] = ObjectSerializer::toQueryValue($inbox_id);
+        }
+        // query params
+        if ($timeout !== null) {
+            $queryParams['timeout'] = ObjectSerializer::toQueryValue($timeout);
+        }
+
+
+        // body params
+        $_tempBody = null;
+        if (isset($match_options)) {
+            $_tempBody = $match_options;
+        }
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            if ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
+            } else {
+                $httpBody = $_tempBody;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('x-api-key');
+        if ($apiKey !== null) {
+            $headers['x-api-key'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'POST',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation waitForNthEmail
      *
      * Wait for or fetch the email with a given index in the inbox specified
      *
      * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
      * @param  int $index Zero based index of the email to wait for (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
      *
      * @throws \MailSlurp\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \MailSlurp\Models\Email
      */
-    public function waitForNthEmail($inbox_id = null, $index = null)
+    public function waitForNthEmail($inbox_id = null, $index = null, $timeout = null)
     {
-        list($response) = $this->waitForNthEmailWithHttpInfo($inbox_id, $index);
+        list($response) = $this->waitForNthEmailWithHttpInfo($inbox_id, $index, $timeout);
         return $response;
     }
 
@@ -1095,14 +2130,15 @@ class CommonOperationsApi
      *
      * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
      * @param  int $index Zero based index of the email to wait for (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
      *
      * @throws \MailSlurp\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \MailSlurp\Models\Email, HTTP status code, HTTP response headers (array of strings)
      */
-    public function waitForNthEmailWithHttpInfo($inbox_id = null, $index = null)
+    public function waitForNthEmailWithHttpInfo($inbox_id = null, $index = null, $timeout = null)
     {
-        $request = $this->waitForNthEmailRequest($inbox_id, $index);
+        $request = $this->waitForNthEmailRequest($inbox_id, $index, $timeout);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1184,13 +2220,14 @@ class CommonOperationsApi
      *
      * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
      * @param  int $index Zero based index of the email to wait for (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function waitForNthEmailAsync($inbox_id = null, $index = null)
+    public function waitForNthEmailAsync($inbox_id = null, $index = null, $timeout = null)
     {
-        return $this->waitForNthEmailAsyncWithHttpInfo($inbox_id, $index)
+        return $this->waitForNthEmailAsyncWithHttpInfo($inbox_id, $index, $timeout)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1205,14 +2242,15 @@ class CommonOperationsApi
      *
      * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
      * @param  int $index Zero based index of the email to wait for (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function waitForNthEmailAsyncWithHttpInfo($inbox_id = null, $index = null)
+    public function waitForNthEmailAsyncWithHttpInfo($inbox_id = null, $index = null, $timeout = null)
     {
         $returnType = '\MailSlurp\Models\Email';
-        $request = $this->waitForNthEmailRequest($inbox_id, $index);
+        $request = $this->waitForNthEmailRequest($inbox_id, $index, $timeout);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1253,11 +2291,12 @@ class CommonOperationsApi
      *
      * @param  string $inbox_id Id of the inbox we are fetching emails from (optional)
      * @param  int $index Zero based index of the email to wait for (optional)
+     * @param  int $timeout Max milliseconds to wait (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function waitForNthEmailRequest($inbox_id = null, $index = null)
+    protected function waitForNthEmailRequest($inbox_id = null, $index = null, $timeout = null)
     {
 
         $resourcePath = '/waitForNthEmail';
@@ -1274,6 +2313,10 @@ class CommonOperationsApi
         // query params
         if ($index !== null) {
             $queryParams['index'] = ObjectSerializer::toQueryValue($index);
+        }
+        // query params
+        if ($timeout !== null) {
+            $queryParams['timeout'] = ObjectSerializer::toQueryValue($timeout);
         }
 
 

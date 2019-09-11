@@ -3,6 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**attachments** | **string[]** | Optional list of attachment IDs to send with this email | [optional] 
 **bcc** | **string[]** | Optional list of bcc destination email addresses | [optional] 
 **body** | **string** | Contents of email | [optional] 
 **cc** | **string[]** | Optional list of cc destination email addresses | [optional] 

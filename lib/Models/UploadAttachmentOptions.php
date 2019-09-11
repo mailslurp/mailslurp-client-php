@@ -1,6 +1,6 @@
 <?php
 /**
- * EmailPreview
+ * UploadAttachmentOptions
  *
  * PHP version 5
  *
@@ -33,15 +33,15 @@ use \ArrayAccess;
 use \MailSlurp\ObjectSerializer;
 
 /**
- * EmailPreview Class Doc Comment
+ * UploadAttachmentOptions Class Doc Comment
  *
  * @category Class
- * @description Preview of an email message. For full message call the message endpoint with a given message id.
+ * @description Options for uploading files for attachments
  * @package  MailSlurp
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class EmailPreview implements ModelInterface, ArrayAccess
+class UploadAttachmentOptions implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -50,7 +50,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $openAPIModelName = 'EmailPreview';
+    protected static $openAPIModelName = 'UploadAttachmentOptions';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,12 +58,9 @@ class EmailPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPITypes = [
-        'bcc' => 'string[]',
-        'cc' => 'string[]',
-        'created' => '\DateTime',
-        'id' => 'string',
-        'subject' => 'string',
-        'to' => 'string[]'
+        'base64_contents' => 'string',
+        'content_type' => 'string',
+        'filename' => 'string'
     ];
 
     /**
@@ -72,12 +69,9 @@ class EmailPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPIFormats = [
-        'bcc' => null,
-        'cc' => null,
-        'created' => 'date-time',
-        'id' => 'uuid',
-        'subject' => null,
-        'to' => null
+        'base64_contents' => null,
+        'content_type' => null,
+        'filename' => null
     ];
 
     /**
@@ -107,12 +101,9 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'bcc' => 'bcc',
-        'cc' => 'cc',
-        'created' => 'created',
-        'id' => 'id',
-        'subject' => 'subject',
-        'to' => 'to'
+        'base64_contents' => 'base64Contents',
+        'content_type' => 'contentType',
+        'filename' => 'filename'
     ];
 
     /**
@@ -121,12 +112,9 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'bcc' => 'setBcc',
-        'cc' => 'setCc',
-        'created' => 'setCreated',
-        'id' => 'setId',
-        'subject' => 'setSubject',
-        'to' => 'setTo'
+        'base64_contents' => 'setBase64Contents',
+        'content_type' => 'setContentType',
+        'filename' => 'setFilename'
     ];
 
     /**
@@ -135,12 +123,9 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'bcc' => 'getBcc',
-        'cc' => 'getCc',
-        'created' => 'getCreated',
-        'id' => 'getId',
-        'subject' => 'getSubject',
-        'to' => 'getTo'
+        'base64_contents' => 'getBase64Contents',
+        'content_type' => 'getContentType',
+        'filename' => 'getFilename'
     ];
 
     /**
@@ -203,12 +188,9 @@ class EmailPreview implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['bcc'] = isset($data['bcc']) ? $data['bcc'] : null;
-        $this->container['cc'] = isset($data['cc']) ? $data['cc'] : null;
-        $this->container['created'] = isset($data['created']) ? $data['created'] : null;
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['subject'] = isset($data['subject']) ? $data['subject'] : null;
-        $this->container['to'] = isset($data['to']) ? $data['to'] : null;
+        $this->container['base64_contents'] = isset($data['base64_contents']) ? $data['base64_contents'] : null;
+        $this->container['content_type'] = isset($data['content_type']) ? $data['content_type'] : null;
+        $this->container['filename'] = isset($data['filename']) ? $data['filename'] : null;
     }
 
     /**
@@ -220,15 +202,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['created'] === null) {
-            $invalidProperties[] = "'created' can't be null";
-        }
-        if ($this->container['id'] === null) {
-            $invalidProperties[] = "'id' can't be null";
-        }
-        if ($this->container['to'] === null) {
-            $invalidProperties[] = "'to' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -245,145 +218,73 @@ class EmailPreview implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets bcc
-     *
-     * @return string[]|null
-     */
-    public function getBcc()
-    {
-        return $this->container['bcc'];
-    }
-
-    /**
-     * Sets bcc
-     *
-     * @param string[]|null $bcc bcc
-     *
-     * @return $this
-     */
-    public function setBcc($bcc)
-    {
-        $this->container['bcc'] = $bcc;
-
-        return $this;
-    }
-
-    /**
-     * Gets cc
-     *
-     * @return string[]|null
-     */
-    public function getCc()
-    {
-        return $this->container['cc'];
-    }
-
-    /**
-     * Sets cc
-     *
-     * @param string[]|null $cc cc
-     *
-     * @return $this
-     */
-    public function setCc($cc)
-    {
-        $this->container['cc'] = $cc;
-
-        return $this;
-    }
-
-    /**
-     * Gets created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->container['created'];
-    }
-
-    /**
-     * Sets created
-     *
-     * @param \DateTime $created created
-     *
-     * @return $this
-     */
-    public function setCreated($created)
-    {
-        $this->container['created'] = $created;
-
-        return $this;
-    }
-
-    /**
-     * Gets id
-     *
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->container['id'];
-    }
-
-    /**
-     * Sets id
-     *
-     * @param string $id id
-     *
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->container['id'] = $id;
-
-        return $this;
-    }
-
-    /**
-     * Gets subject
+     * Gets base64_contents
      *
      * @return string|null
      */
-    public function getSubject()
+    public function getBase64Contents()
     {
-        return $this->container['subject'];
+        return $this->container['base64_contents'];
     }
 
     /**
-     * Sets subject
+     * Sets base64_contents
      *
-     * @param string|null $subject subject
+     * @param string|null $base64_contents Base64 encoded string of file contents
      *
      * @return $this
      */
-    public function setSubject($subject)
+    public function setBase64Contents($base64_contents)
     {
-        $this->container['subject'] = $subject;
+        $this->container['base64_contents'] = $base64_contents;
 
         return $this;
     }
 
     /**
-     * Gets to
+     * Gets content_type
      *
-     * @return string[]
+     * @return string|null
      */
-    public function getTo()
+    public function getContentType()
     {
-        return $this->container['to'];
+        return $this->container['content_type'];
     }
 
     /**
-     * Sets to
+     * Sets content_type
      *
-     * @param string[] $to to
+     * @param string|null $content_type Optional contentType for file. For instance application/pdf
      *
      * @return $this
      */
-    public function setTo($to)
+    public function setContentType($content_type)
     {
-        $this->container['to'] = $to;
+        $this->container['content_type'] = $content_type;
+
+        return $this;
+    }
+
+    /**
+     * Gets filename
+     *
+     * @return string|null
+     */
+    public function getFilename()
+    {
+        return $this->container['filename'];
+    }
+
+    /**
+     * Sets filename
+     *
+     * @param string|null $filename Optional filename to save upload with
+     *
+     * @return $this
+     */
+    public function setFilename($filename)
+    {
+        $this->container['filename'] = $filename;
 
         return $this;
     }

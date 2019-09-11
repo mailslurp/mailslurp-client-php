@@ -9,7 +9,7 @@ Method | HTTP request | Description
 [**bulkSendEmails**](ExtraOperationsApi.md#bulkSendEmails) | **POST** /bulk/send | Bulk Send Emails
 [**createInbox**](ExtraOperationsApi.md#createInbox) | **POST** /inboxes | Create an Inbox (email address)
 [**createWebhook**](ExtraOperationsApi.md#createWebhook) | **POST** /inboxes/{inboxId}/webhooks | Attach a WebHook URL to an inbox
-[**deleteEmail**](ExtraOperationsApi.md#deleteEmail) | **DELETE** /emails/{emailId} | Delete Email
+[**deleteEmail1**](ExtraOperationsApi.md#deleteEmail1) | **DELETE** /emails/{emailId} | Delete Email
 [**deleteInbox**](ExtraOperationsApi.md#deleteInbox) | **DELETE** /inboxes/{inboxId} | Delete Inbox / Email Address
 [**deleteWebhook**](ExtraOperationsApi.md#deleteWebhook) | **DELETE** /inboxes/{inboxId}/webhooks/{webhookId} | Delete and disable a WebHook for an Inbox
 [**downloadAttachment**](ExtraOperationsApi.md#downloadAttachment) | **GET** /emails/{emailId}/attachments/{attachmentId} | Get email attachment
@@ -20,6 +20,8 @@ Method | HTTP request | Description
 [**getRawEmailContents**](ExtraOperationsApi.md#getRawEmailContents) | **GET** /emails/{emailId}/raw | Get Raw Email Content
 [**getWebhooks**](ExtraOperationsApi.md#getWebhooks) | **GET** /inboxes/{inboxId}/webhooks | Get all WebHooks for an Inbox
 [**sendEmail**](ExtraOperationsApi.md#sendEmail) | **POST** /inboxes/{inboxId} | Send Email
+[**uploadAttachment**](ExtraOperationsApi.md#uploadAttachment) | **POST** /attachments | Upload an attachment for sending
+[**uploadMultipartForm**](ExtraOperationsApi.md#uploadMultipartForm) | **POST** /attachments/multipart | Upload an attachment for sending using Multipart Form
 
 
 # **bulkCreateInboxes**
@@ -293,8 +295,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
-# **deleteEmail**
-> deleteEmail($email_id)
+# **deleteEmail1**
+> deleteEmail1($email_id)
 
 Delete Email
 
@@ -319,9 +321,9 @@ $apiInstance = new MailSlurp\Api\ExtraOperationsApi(
 $email_id = 'email_id_example'; // string | emailId
 
 try {
-    $apiInstance->deleteEmail($email_id);
+    $apiInstance->deleteEmail1($email_id);
 } catch (Exception $e) {
-    echo 'Exception when calling ExtraOperationsApi->deleteEmail: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling ExtraOperationsApi->deleteEmail1: ', $e->getMessage(), PHP_EOL;
 }
 ?>
 ```
@@ -896,6 +898,120 @@ void (empty response body)
 
  - **Content-Type**: application/json
  - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **uploadAttachment**
+> string uploadAttachment($upload_attachment_options)
+
+Upload an attachment for sending
+
+When sending emails with attachments first upload each attachment with this endpoint. Record the returned attachment IDs. Then use these attachment IDs in the SendEmailOptions when sending an email. This means that attachments can easily be reused.
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+$apiInstance = new MailSlurp\Api\ExtraOperationsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$upload_attachment_options = new \MailSlurp\Models\UploadAttachmentOptions(); // \MailSlurp\Models\UploadAttachmentOptions | uploadOptions
+
+try {
+    $result = $apiInstance->uploadAttachment($upload_attachment_options);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ExtraOperationsApi->uploadAttachment: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **upload_attachment_options** | [**\MailSlurp\Models\UploadAttachmentOptions**](../Model/UploadAttachmentOptions.md)| uploadOptions |
+
+### Return type
+
+**string**
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **uploadMultipartForm**
+> string uploadMultipartForm($file, $content_type, $filename)
+
+Upload an attachment for sending using Multipart Form
+
+When sending emails with attachments first upload each attachment with this endpoint. Record the returned attachment IDs. Then use these attachment IDs in the SendEmailOptions when sending an email. This means that attachments can easily be reused.
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+$apiInstance = new MailSlurp\Api\ExtraOperationsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$file = "/path/to/file.txt"; // \SplFileObject | file
+$content_type = 'content_type_example'; // string | contentType
+$filename = 'filename_example'; // string | filename
+
+try {
+    $result = $apiInstance->uploadMultipartForm($file, $content_type, $filename);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ExtraOperationsApi->uploadMultipartForm: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **file** | **\SplFileObject****\SplFileObject**| file |
+ **content_type** | **string**| contentType | [optional]
+ **filename** | **string**| filename | [optional]
+
+### Return type
+
+**string**
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
