@@ -3,15 +3,16 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**attachments** | **string[]** | Optional list of attachment IDs to send with this email | [optional] 
+**attachments** | **string[]** | Optional list of attachment IDs to send with this email. You must first upload each attachment separately in order to obtain attachment IDs | [optional] 
 **bcc** | **string[]** | Optional list of bcc destination email addresses | [optional] 
-**body** | **string** | Contents of email | [optional] 
+**body** | **string** | Contents of email. If HTML set isHTML to true. You can use moustache templates here if you provide a templateVariables option | [optional] 
 **cc** | **string[]** | Optional list of cc destination email addresses | [optional] 
 **charset** | **string** | Optional charset | [optional] 
 **from** | **string** | Optional from address. If not set source inbox address will be used | [optional] 
 **html** | **bool** |  | [optional] 
 **reply_to** | **string** | Optional replyTo header | [optional] 
 **subject** | **string** | Optional email subject line | [optional] 
+**template_variables** | [**object**](.md) | Optional map of template variables. Will replace moustache syntax variables in subject or body with the associated values | [optional] 
 **to** | **string[]** | List of destination email addresses. Even single recipients must be in array form. | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

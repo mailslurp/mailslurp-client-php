@@ -8,9 +8,11 @@ Name | Type | Description | Notes
 **bcc** | **string[]** |  | [optional] 
 **body** | **string** |  | [optional] 
 **cc** | **string[]** |  | [optional] 
+**charset** | **string** |  | [optional] 
 **created_at** | [**\DateTime**](\DateTime.md) |  | 
 **from** | **string** |  | [optional] 
 **headers** | **map[string,string]** |  | [optional] 
+**html** | **bool** |  | [optional] 
 **id** | **string** |  | 
 **inbox_id** | **string** |  | 
 **raw_url** | **string** |  | [optional] 

@@ -13,6 +13,7 @@ Method | HTTP request | Description
 [**deleteInbox**](ExtraOperationsApi.md#deleteInbox) | **DELETE** /inboxes/{inboxId} | Delete Inbox / Email Address
 [**deleteWebhook**](ExtraOperationsApi.md#deleteWebhook) | **DELETE** /inboxes/{inboxId}/webhooks/{webhookId} | Delete and disable a WebHook for an Inbox
 [**downloadAttachment**](ExtraOperationsApi.md#downloadAttachment) | **GET** /emails/{emailId}/attachments/{attachmentId} | Get email attachment
+[**forwardEmail**](ExtraOperationsApi.md#forwardEmail) | **POST** /emails/{emailId}/forward | Forward Email
 [**getEmail**](ExtraOperationsApi.md#getEmail) | **GET** /emails/{emailId} | Get Email Content
 [**getEmails**](ExtraOperationsApi.md#getEmails) | **GET** /inboxes/{inboxId}/emails | List Emails in an Inbox / EmailAddress
 [**getInbox**](ExtraOperationsApi.md#getInbox) | **GET** /inboxes/{inboxId} | Get Inbox / EmailAddress
@@ -509,6 +510,62 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **forwardEmail**
+> forwardEmail($email_id, $forward_email_options)
+
+Forward Email
+
+Forward email content to given recipients
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+$apiInstance = new MailSlurp\Api\ExtraOperationsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email_id = 'email_id_example'; // string | emailId
+$forward_email_options = new \MailSlurp\Models\ForwardEmailOptions(); // \MailSlurp\Models\ForwardEmailOptions | forwardEmailOptions
+
+try {
+    $apiInstance->forwardEmail($email_id, $forward_email_options);
+} catch (Exception $e) {
+    echo 'Exception when calling ExtraOperationsApi->forwardEmail: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_id** | [**string**](../Model/.md)| emailId |
+ **forward_email_options** | [**\MailSlurp\Models\ForwardEmailOptions**](../Model/ForwardEmailOptions.md)| forwardEmailOptions |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)

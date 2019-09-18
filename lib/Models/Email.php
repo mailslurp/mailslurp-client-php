@@ -63,9 +63,11 @@ class Email implements ModelInterface, ArrayAccess
         'bcc' => 'string[]',
         'body' => 'string',
         'cc' => 'string[]',
+        'charset' => 'string',
         'created_at' => '\DateTime',
         'from' => 'string',
         'headers' => 'map[string,string]',
+        'html' => 'bool',
         'id' => 'string',
         'inbox_id' => 'string',
         'raw_url' => 'string',
@@ -86,9 +88,11 @@ class Email implements ModelInterface, ArrayAccess
         'bcc' => null,
         'body' => null,
         'cc' => null,
+        'charset' => null,
         'created_at' => 'date-time',
         'from' => null,
         'headers' => null,
+        'html' => null,
         'id' => 'uuid',
         'inbox_id' => 'uuid',
         'raw_url' => null,
@@ -130,9 +134,11 @@ class Email implements ModelInterface, ArrayAccess
         'bcc' => 'bcc',
         'body' => 'body',
         'cc' => 'cc',
+        'charset' => 'charset',
         'created_at' => 'createdAt',
         'from' => 'from',
         'headers' => 'headers',
+        'html' => 'html',
         'id' => 'id',
         'inbox_id' => 'inboxId',
         'raw_url' => 'rawUrl',
@@ -153,9 +159,11 @@ class Email implements ModelInterface, ArrayAccess
         'bcc' => 'setBcc',
         'body' => 'setBody',
         'cc' => 'setCc',
+        'charset' => 'setCharset',
         'created_at' => 'setCreatedAt',
         'from' => 'setFrom',
         'headers' => 'setHeaders',
+        'html' => 'setHtml',
         'id' => 'setId',
         'inbox_id' => 'setInboxId',
         'raw_url' => 'setRawUrl',
@@ -176,9 +184,11 @@ class Email implements ModelInterface, ArrayAccess
         'bcc' => 'getBcc',
         'body' => 'getBody',
         'cc' => 'getCc',
+        'charset' => 'getCharset',
         'created_at' => 'getCreatedAt',
         'from' => 'getFrom',
         'headers' => 'getHeaders',
+        'html' => 'getHtml',
         'id' => 'getId',
         'inbox_id' => 'getInboxId',
         'raw_url' => 'getRawUrl',
@@ -253,9 +263,11 @@ class Email implements ModelInterface, ArrayAccess
         $this->container['bcc'] = isset($data['bcc']) ? $data['bcc'] : null;
         $this->container['body'] = isset($data['body']) ? $data['body'] : null;
         $this->container['cc'] = isset($data['cc']) ? $data['cc'] : null;
+        $this->container['charset'] = isset($data['charset']) ? $data['charset'] : null;
         $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
         $this->container['from'] = isset($data['from']) ? $data['from'] : null;
         $this->container['headers'] = isset($data['headers']) ? $data['headers'] : null;
+        $this->container['html'] = isset($data['html']) ? $data['html'] : null;
         $this->container['id'] = isset($data['id']) ? $data['id'] : null;
         $this->container['inbox_id'] = isset($data['inbox_id']) ? $data['inbox_id'] : null;
         $this->container['raw_url'] = isset($data['raw_url']) ? $data['raw_url'] : null;
@@ -428,6 +440,30 @@ class Email implements ModelInterface, ArrayAccess
     }
 
     /**
+     * Gets charset
+     *
+     * @return string|null
+     */
+    public function getCharset()
+    {
+        return $this->container['charset'];
+    }
+
+    /**
+     * Sets charset
+     *
+     * @param string|null $charset charset
+     *
+     * @return $this
+     */
+    public function setCharset($charset)
+    {
+        $this->container['charset'] = $charset;
+
+        return $this;
+    }
+
+    /**
      * Gets created_at
      *
      * @return \DateTime
@@ -495,6 +531,30 @@ class Email implements ModelInterface, ArrayAccess
     public function setHeaders($headers)
     {
         $this->container['headers'] = $headers;
+
+        return $this;
+    }
+
+    /**
+     * Gets html
+     *
+     * @return bool|null
+     */
+    public function getHtml()
+    {
+        return $this->container['html'];
+    }
+
+    /**
+     * Sets html
+     *
+     * @param bool|null $html html
+     *
+     * @return $this
+     */
+    public function setHtml($html)
+    {
+        $this->container['html'] = $html;
 
         return $this;
     }

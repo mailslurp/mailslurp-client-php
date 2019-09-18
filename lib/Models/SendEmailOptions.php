@@ -67,6 +67,7 @@ class SendEmailOptions implements ModelInterface, ArrayAccess
         'html' => 'bool',
         'reply_to' => 'string',
         'subject' => 'string',
+        'template_variables' => 'object',
         'to' => 'string[]'
     ];
 
@@ -85,6 +86,7 @@ class SendEmailOptions implements ModelInterface, ArrayAccess
         'html' => null,
         'reply_to' => null,
         'subject' => null,
+        'template_variables' => null,
         'to' => null
     ];
 
@@ -124,6 +126,7 @@ class SendEmailOptions implements ModelInterface, ArrayAccess
         'html' => 'html',
         'reply_to' => 'replyTo',
         'subject' => 'subject',
+        'template_variables' => 'templateVariables',
         'to' => 'to'
     ];
 
@@ -142,6 +145,7 @@ class SendEmailOptions implements ModelInterface, ArrayAccess
         'html' => 'setHtml',
         'reply_to' => 'setReplyTo',
         'subject' => 'setSubject',
+        'template_variables' => 'setTemplateVariables',
         'to' => 'setTo'
     ];
 
@@ -160,6 +164,7 @@ class SendEmailOptions implements ModelInterface, ArrayAccess
         'html' => 'getHtml',
         'reply_to' => 'getReplyTo',
         'subject' => 'getSubject',
+        'template_variables' => 'getTemplateVariables',
         'to' => 'getTo'
     ];
 
@@ -232,6 +237,7 @@ class SendEmailOptions implements ModelInterface, ArrayAccess
         $this->container['html'] = isset($data['html']) ? $data['html'] : null;
         $this->container['reply_to'] = isset($data['reply_to']) ? $data['reply_to'] : null;
         $this->container['subject'] = isset($data['subject']) ? $data['subject'] : null;
+        $this->container['template_variables'] = isset($data['template_variables']) ? $data['template_variables'] : null;
         $this->container['to'] = isset($data['to']) ? $data['to'] : null;
     }
 
@@ -275,7 +281,7 @@ class SendEmailOptions implements ModelInterface, ArrayAccess
     /**
      * Sets attachments
      *
-     * @param string[]|null $attachments Optional list of attachment IDs to send with this email
+     * @param string[]|null $attachments Optional list of attachment IDs to send with this email. You must first upload each attachment separately in order to obtain attachment IDs
      *
      * @return $this
      */
@@ -323,7 +329,7 @@ class SendEmailOptions implements ModelInterface, ArrayAccess
     /**
      * Sets body
      *
-     * @param string|null $body Contents of email
+     * @param string|null $body Contents of email. If HTML set isHTML to true. You can use moustache templates here if you provide a templateVariables option
      *
      * @return $this
      */
@@ -474,6 +480,30 @@ class SendEmailOptions implements ModelInterface, ArrayAccess
     public function setSubject($subject)
     {
         $this->container['subject'] = $subject;
+
+        return $this;
+    }
+
+    /**
+     * Gets template_variables
+     *
+     * @return object|null
+     */
+    public function getTemplateVariables()
+    {
+        return $this->container['template_variables'];
+    }
+
+    /**
+     * Sets template_variables
+     *
+     * @param object|null $template_variables Optional map of template variables. Will replace moustache syntax variables in subject or body with the associated values
+     *
+     * @return $this
+     */
+    public function setTemplateVariables($template_variables)
+    {
+        $this->container['template_variables'] = $template_variables;
 
         return $this;
     }
