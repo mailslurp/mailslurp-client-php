@@ -1,6 +1,6 @@
 <?php
 /**
- * EmailPreview
+ * DomainPlusVerificationRecordsAndStatus
  *
  * PHP version 5
  *
@@ -33,15 +33,14 @@ use \ArrayAccess;
 use \MailSlurp\ObjectSerializer;
 
 /**
- * EmailPreview Class Doc Comment
+ * DomainPlusVerificationRecordsAndStatus Class Doc Comment
  *
  * @category Class
- * @description Preview of an email message. For full message call the email endpoints with the provided email id.
  * @package  MailSlurp
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class EmailPreview implements ModelInterface, ArrayAccess
+class DomainPlusVerificationRecordsAndStatus implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -50,7 +49,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $openAPIModelName = 'EmailPreview';
+    protected static $openAPIModelName = 'Domain plus verification records and status';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,12 +57,13 @@ class EmailPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPITypes = [
-        'bcc' => 'string[]',
-        'cc' => 'string[]',
-        'created' => '\DateTime',
+        'created_at' => '\DateTime',
+        'domain' => 'string',
         'id' => 'string',
-        'subject' => 'string',
-        'to' => 'string[]'
+        'updated_at' => '\DateTime',
+        'user_id' => 'string',
+        'verification_token' => 'string',
+        'verified' => 'bool'
     ];
 
     /**
@@ -72,12 +72,13 @@ class EmailPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPIFormats = [
-        'bcc' => null,
-        'cc' => null,
-        'created' => 'date-time',
+        'created_at' => 'date-time',
+        'domain' => null,
         'id' => 'uuid',
-        'subject' => null,
-        'to' => null
+        'updated_at' => 'date-time',
+        'user_id' => 'uuid',
+        'verification_token' => null,
+        'verified' => null
     ];
 
     /**
@@ -107,12 +108,13 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'bcc' => 'bcc',
-        'cc' => 'cc',
-        'created' => 'created',
+        'created_at' => 'createdAt',
+        'domain' => 'domain',
         'id' => 'id',
-        'subject' => 'subject',
-        'to' => 'to'
+        'updated_at' => 'updatedAt',
+        'user_id' => 'userId',
+        'verification_token' => 'verificationToken',
+        'verified' => 'verified'
     ];
 
     /**
@@ -121,12 +123,13 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'bcc' => 'setBcc',
-        'cc' => 'setCc',
-        'created' => 'setCreated',
+        'created_at' => 'setCreatedAt',
+        'domain' => 'setDomain',
         'id' => 'setId',
-        'subject' => 'setSubject',
-        'to' => 'setTo'
+        'updated_at' => 'setUpdatedAt',
+        'user_id' => 'setUserId',
+        'verification_token' => 'setVerificationToken',
+        'verified' => 'setVerified'
     ];
 
     /**
@@ -135,12 +138,13 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'bcc' => 'getBcc',
-        'cc' => 'getCc',
-        'created' => 'getCreated',
+        'created_at' => 'getCreatedAt',
+        'domain' => 'getDomain',
         'id' => 'getId',
-        'subject' => 'getSubject',
-        'to' => 'getTo'
+        'updated_at' => 'getUpdatedAt',
+        'user_id' => 'getUserId',
+        'verification_token' => 'getVerificationToken',
+        'verified' => 'getVerified'
     ];
 
     /**
@@ -203,12 +207,13 @@ class EmailPreview implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['bcc'] = isset($data['bcc']) ? $data['bcc'] : null;
-        $this->container['cc'] = isset($data['cc']) ? $data['cc'] : null;
-        $this->container['created'] = isset($data['created']) ? $data['created'] : null;
+        $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
+        $this->container['domain'] = isset($data['domain']) ? $data['domain'] : null;
         $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['subject'] = isset($data['subject']) ? $data['subject'] : null;
-        $this->container['to'] = isset($data['to']) ? $data['to'] : null;
+        $this->container['updated_at'] = isset($data['updated_at']) ? $data['updated_at'] : null;
+        $this->container['user_id'] = isset($data['user_id']) ? $data['user_id'] : null;
+        $this->container['verification_token'] = isset($data['verification_token']) ? $data['verification_token'] : null;
+        $this->container['verified'] = isset($data['verified']) ? $data['verified'] : null;
     }
 
     /**
@@ -220,11 +225,26 @@ class EmailPreview implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['created'] === null) {
-            $invalidProperties[] = "'created' can't be null";
+        if ($this->container['created_at'] === null) {
+            $invalidProperties[] = "'created_at' can't be null";
         }
-        if ($this->container['to'] === null) {
-            $invalidProperties[] = "'to' can't be null";
+        if ($this->container['domain'] === null) {
+            $invalidProperties[] = "'domain' can't be null";
+        }
+        if ($this->container['id'] === null) {
+            $invalidProperties[] = "'id' can't be null";
+        }
+        if ($this->container['updated_at'] === null) {
+            $invalidProperties[] = "'updated_at' can't be null";
+        }
+        if ($this->container['user_id'] === null) {
+            $invalidProperties[] = "'user_id' can't be null";
+        }
+        if ($this->container['verification_token'] === null) {
+            $invalidProperties[] = "'verification_token' can't be null";
+        }
+        if ($this->container['verified'] === null) {
+            $invalidProperties[] = "'verified' can't be null";
         }
         return $invalidProperties;
     }
@@ -242,73 +262,49 @@ class EmailPreview implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets bcc
-     *
-     * @return string[]|null
-     */
-    public function getBcc()
-    {
-        return $this->container['bcc'];
-    }
-
-    /**
-     * Sets bcc
-     *
-     * @param string[]|null $bcc bcc
-     *
-     * @return $this
-     */
-    public function setBcc($bcc)
-    {
-        $this->container['bcc'] = $bcc;
-
-        return $this;
-    }
-
-    /**
-     * Gets cc
-     *
-     * @return string[]|null
-     */
-    public function getCc()
-    {
-        return $this->container['cc'];
-    }
-
-    /**
-     * Sets cc
-     *
-     * @param string[]|null $cc cc
-     *
-     * @return $this
-     */
-    public function setCc($cc)
-    {
-        $this->container['cc'] = $cc;
-
-        return $this;
-    }
-
-    /**
-     * Gets created
+     * Gets created_at
      *
      * @return \DateTime
      */
-    public function getCreated()
+    public function getCreatedAt()
     {
-        return $this->container['created'];
+        return $this->container['created_at'];
     }
 
     /**
-     * Sets created
+     * Sets created_at
      *
-     * @param \DateTime $created created
+     * @param \DateTime $created_at created_at
      *
      * @return $this
      */
-    public function setCreated($created)
+    public function setCreatedAt($created_at)
     {
-        $this->container['created'] = $created;
+        $this->container['created_at'] = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets domain
+     *
+     * @return string
+     */
+    public function getDomain()
+    {
+        return $this->container['domain'];
+    }
+
+    /**
+     * Sets domain
+     *
+     * @param string $domain domain
+     *
+     * @return $this
+     */
+    public function setDomain($domain)
+    {
+        $this->container['domain'] = $domain;
 
         return $this;
     }
@@ -316,7 +312,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
     /**
      * Gets id
      *
-     * @return string|null
+     * @return string
      */
     public function getId()
     {
@@ -326,7 +322,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
     /**
      * Sets id
      *
-     * @param string|null $id ID of the Email.
+     * @param string $id id
      *
      * @return $this
      */
@@ -338,49 +334,97 @@ class EmailPreview implements ModelInterface, ArrayAccess
     }
 
     /**
-     * Gets subject
+     * Gets updated_at
      *
-     * @return string|null
+     * @return \DateTime
      */
-    public function getSubject()
+    public function getUpdatedAt()
     {
-        return $this->container['subject'];
+        return $this->container['updated_at'];
     }
 
     /**
-     * Sets subject
+     * Sets updated_at
      *
-     * @param string|null $subject subject
+     * @param \DateTime $updated_at updated_at
      *
      * @return $this
      */
-    public function setSubject($subject)
+    public function setUpdatedAt($updated_at)
     {
-        $this->container['subject'] = $subject;
+        $this->container['updated_at'] = $updated_at;
 
         return $this;
     }
 
     /**
-     * Gets to
+     * Gets user_id
      *
-     * @return string[]
+     * @return string
      */
-    public function getTo()
+    public function getUserId()
     {
-        return $this->container['to'];
+        return $this->container['user_id'];
     }
 
     /**
-     * Sets to
+     * Sets user_id
      *
-     * @param string[] $to to
+     * @param string $user_id user_id
      *
      * @return $this
      */
-    public function setTo($to)
+    public function setUserId($user_id)
     {
-        $this->container['to'] = $to;
+        $this->container['user_id'] = $user_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets verification_token
+     *
+     * @return string
+     */
+    public function getVerificationToken()
+    {
+        return $this->container['verification_token'];
+    }
+
+    /**
+     * Sets verification_token
+     *
+     * @param string $verification_token verification_token
+     *
+     * @return $this
+     */
+    public function setVerificationToken($verification_token)
+    {
+        $this->container['verification_token'] = $verification_token;
+
+        return $this;
+    }
+
+    /**
+     * Gets verified
+     *
+     * @return bool
+     */
+    public function getVerified()
+    {
+        return $this->container['verified'];
+    }
+
+    /**
+     * Sets verified
+     *
+     * @param bool $verified verified
+     *
+     * @return $this
+     */
+    public function setVerified($verified)
+    {
+        $this->container['verified'] = $verified;
 
         return $this;
     }

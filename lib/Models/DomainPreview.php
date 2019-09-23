@@ -1,6 +1,6 @@
 <?php
 /**
- * EmailPreview
+ * DomainPreview
  *
  * PHP version 5
  *
@@ -33,15 +33,15 @@ use \ArrayAccess;
 use \MailSlurp\ObjectSerializer;
 
 /**
- * EmailPreview Class Doc Comment
+ * DomainPreview Class Doc Comment
  *
  * @category Class
- * @description Preview of an email message. For full message call the email endpoints with the provided email id.
+ * @description Preview object for domain entity
  * @package  MailSlurp
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class EmailPreview implements ModelInterface, ArrayAccess
+class DomainPreview implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -50,7 +50,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $openAPIModelName = 'EmailPreview';
+    protected static $openAPIModelName = 'DomainPreview';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,12 +58,8 @@ class EmailPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPITypes = [
-        'bcc' => 'string[]',
-        'cc' => 'string[]',
-        'created' => '\DateTime',
-        'id' => 'string',
-        'subject' => 'string',
-        'to' => 'string[]'
+        'domain' => 'string',
+        'id' => 'string'
     ];
 
     /**
@@ -72,12 +68,8 @@ class EmailPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPIFormats = [
-        'bcc' => null,
-        'cc' => null,
-        'created' => 'date-time',
-        'id' => 'uuid',
-        'subject' => null,
-        'to' => null
+        'domain' => null,
+        'id' => 'uuid'
     ];
 
     /**
@@ -107,12 +99,8 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'bcc' => 'bcc',
-        'cc' => 'cc',
-        'created' => 'created',
-        'id' => 'id',
-        'subject' => 'subject',
-        'to' => 'to'
+        'domain' => 'domain',
+        'id' => 'id'
     ];
 
     /**
@@ -121,12 +109,8 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'bcc' => 'setBcc',
-        'cc' => 'setCc',
-        'created' => 'setCreated',
-        'id' => 'setId',
-        'subject' => 'setSubject',
-        'to' => 'setTo'
+        'domain' => 'setDomain',
+        'id' => 'setId'
     ];
 
     /**
@@ -135,12 +119,8 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'bcc' => 'getBcc',
-        'cc' => 'getCc',
-        'created' => 'getCreated',
-        'id' => 'getId',
-        'subject' => 'getSubject',
-        'to' => 'getTo'
+        'domain' => 'getDomain',
+        'id' => 'getId'
     ];
 
     /**
@@ -203,12 +183,8 @@ class EmailPreview implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['bcc'] = isset($data['bcc']) ? $data['bcc'] : null;
-        $this->container['cc'] = isset($data['cc']) ? $data['cc'] : null;
-        $this->container['created'] = isset($data['created']) ? $data['created'] : null;
+        $this->container['domain'] = isset($data['domain']) ? $data['domain'] : null;
         $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['subject'] = isset($data['subject']) ? $data['subject'] : null;
-        $this->container['to'] = isset($data['to']) ? $data['to'] : null;
     }
 
     /**
@@ -220,11 +196,11 @@ class EmailPreview implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['created'] === null) {
-            $invalidProperties[] = "'created' can't be null";
+        if ($this->container['domain'] === null) {
+            $invalidProperties[] = "'domain' can't be null";
         }
-        if ($this->container['to'] === null) {
-            $invalidProperties[] = "'to' can't be null";
+        if ($this->container['id'] === null) {
+            $invalidProperties[] = "'id' can't be null";
         }
         return $invalidProperties;
     }
@@ -242,73 +218,25 @@ class EmailPreview implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets bcc
+     * Gets domain
      *
-     * @return string[]|null
+     * @return string
      */
-    public function getBcc()
+    public function getDomain()
     {
-        return $this->container['bcc'];
+        return $this->container['domain'];
     }
 
     /**
-     * Sets bcc
+     * Sets domain
      *
-     * @param string[]|null $bcc bcc
+     * @param string $domain domain
      *
      * @return $this
      */
-    public function setBcc($bcc)
+    public function setDomain($domain)
     {
-        $this->container['bcc'] = $bcc;
-
-        return $this;
-    }
-
-    /**
-     * Gets cc
-     *
-     * @return string[]|null
-     */
-    public function getCc()
-    {
-        return $this->container['cc'];
-    }
-
-    /**
-     * Sets cc
-     *
-     * @param string[]|null $cc cc
-     *
-     * @return $this
-     */
-    public function setCc($cc)
-    {
-        $this->container['cc'] = $cc;
-
-        return $this;
-    }
-
-    /**
-     * Gets created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->container['created'];
-    }
-
-    /**
-     * Sets created
-     *
-     * @param \DateTime $created created
-     *
-     * @return $this
-     */
-    public function setCreated($created)
-    {
-        $this->container['created'] = $created;
+        $this->container['domain'] = $domain;
 
         return $this;
     }
@@ -316,7 +244,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
     /**
      * Gets id
      *
-     * @return string|null
+     * @return string
      */
     public function getId()
     {
@@ -326,61 +254,13 @@ class EmailPreview implements ModelInterface, ArrayAccess
     /**
      * Sets id
      *
-     * @param string|null $id ID of the Email.
+     * @param string $id id
      *
      * @return $this
      */
     public function setId($id)
     {
         $this->container['id'] = $id;
-
-        return $this;
-    }
-
-    /**
-     * Gets subject
-     *
-     * @return string|null
-     */
-    public function getSubject()
-    {
-        return $this->container['subject'];
-    }
-
-    /**
-     * Sets subject
-     *
-     * @param string|null $subject subject
-     *
-     * @return $this
-     */
-    public function setSubject($subject)
-    {
-        $this->container['subject'] = $subject;
-
-        return $this;
-    }
-
-    /**
-     * Gets to
-     *
-     * @return string[]
-     */
-    public function getTo()
-    {
-        return $this->container['to'];
-    }
-
-    /**
-     * Sets to
-     *
-     * @param string[] $to to
-     *
-     * @return $this
-     */
-    public function setTo($to)
-    {
-        $this->container['to'] = $to;
 
         return $this;
     }

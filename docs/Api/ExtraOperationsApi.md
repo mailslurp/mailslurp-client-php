@@ -7,13 +7,17 @@ Method | HTTP request | Description
 [**bulkCreateInboxes**](ExtraOperationsApi.md#bulkCreateInboxes) | **POST** /bulk/inboxes | Bulk create Inboxes (email addresses)
 [**bulkDeleteInboxes**](ExtraOperationsApi.md#bulkDeleteInboxes) | **DELETE** /bulk/inboxes | Bulk Delete Inboxes
 [**bulkSendEmails**](ExtraOperationsApi.md#bulkSendEmails) | **POST** /bulk/send | Bulk Send Emails
+[**createDomain**](ExtraOperationsApi.md#createDomain) | **POST** /domains | Create Domain
 [**createInbox**](ExtraOperationsApi.md#createInbox) | **POST** /inboxes | Create an Inbox (email address)
 [**createWebhook**](ExtraOperationsApi.md#createWebhook) | **POST** /inboxes/{inboxId}/webhooks | Attach a WebHook URL to an inbox
+[**deleteDomain**](ExtraOperationsApi.md#deleteDomain) | **DELETE** /domains/{id} | Delete a domain
 [**deleteEmail1**](ExtraOperationsApi.md#deleteEmail1) | **DELETE** /emails/{emailId} | Delete Email
 [**deleteInbox**](ExtraOperationsApi.md#deleteInbox) | **DELETE** /inboxes/{inboxId} | Delete Inbox / Email Address
 [**deleteWebhook**](ExtraOperationsApi.md#deleteWebhook) | **DELETE** /inboxes/{inboxId}/webhooks/{webhookId} | Delete and disable a WebHook for an Inbox
 [**downloadAttachment**](ExtraOperationsApi.md#downloadAttachment) | **GET** /emails/{emailId}/attachments/{attachmentId} | Get email attachment
 [**forwardEmail**](ExtraOperationsApi.md#forwardEmail) | **POST** /emails/{emailId}/forward | Forward Email
+[**getDomain**](ExtraOperationsApi.md#getDomain) | **GET** /domains/{id} | Get a domain
+[**getDomains**](ExtraOperationsApi.md#getDomains) | **GET** /domains | Get domains
 [**getEmail**](ExtraOperationsApi.md#getEmail) | **GET** /emails/{emailId} | Get Email Content
 [**getEmails**](ExtraOperationsApi.md#getEmails) | **GET** /inboxes/{inboxId}/emails | List Emails in an Inbox / EmailAddress
 [**getInbox**](ExtraOperationsApi.md#getInbox) | **GET** /inboxes/{inboxId} | Get Inbox / EmailAddress
@@ -188,12 +192,12 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
-# **createInbox**
-> \MailSlurp\Models\Inbox createInbox()
+# **createDomain**
+> \MailSlurp\Models\DomainPlusVerificationRecordsAndStatus createDomain($create_domain_options)
 
-Create an Inbox (email address)
+Create Domain
 
-Create a new inbox and ephemeral email address to send and receive from. This is a necessary step before sending or receiving emails. The response contains the inbox's ID and its associated email address. It is recommended that you create a new inbox during each test method so that it is unique and empty
+Link a domain that you own with MailSlurp so you can create inboxes with it. Returns DNS records used for validation. You must add these verification records to your host provider's DNS setup to verify the domain.
 
 ### Example
 ```php
@@ -211,9 +215,65 @@ $apiInstance = new MailSlurp\Api\ExtraOperationsApi(
     new GuzzleHttp\Client(),
     $config
 );
+$create_domain_options = new \MailSlurp\Models\CreateDomainOptions(); // \MailSlurp\Models\CreateDomainOptions | domainOptions
 
 try {
-    $result = $apiInstance->createInbox();
+    $result = $apiInstance->createDomain($create_domain_options);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ExtraOperationsApi->createDomain: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **create_domain_options** | [**\MailSlurp\Models\CreateDomainOptions**](../Model/CreateDomainOptions.md)| domainOptions |
+
+### Return type
+
+[**\MailSlurp\Models\DomainPlusVerificationRecordsAndStatus**](../Model/DomainPlusVerificationRecordsAndStatus.md)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **createInbox**
+> \MailSlurp\Models\Inbox createInbox($email_address)
+
+Create an Inbox (email address)
+
+Create a new inbox and with a ranmdomized email address to send and receive from. Pass emailAddress parameter if you wish to use a specific email address. Creating an inbox is required before sending or receiving emails. If writing tests it is recommended that you create a new inbox during each test method so that it is unique and empty.
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+$apiInstance = new MailSlurp\Api\ExtraOperationsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email_address = 'email_address_example'; // string | Optional email address including domain you wish inbox to use (eg: test123@mydomain.com). Only supports domains that you have registered and verified with MailSlurp using dashboard or `createDomain` method.
+
+try {
+    $result = $apiInstance->createInbox($email_address);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ExtraOperationsApi->createInbox: ', $e->getMessage(), PHP_EOL;
@@ -222,7 +282,10 @@ try {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_address** | **string**| Optional email address including domain you wish inbox to use (eg: test123@mydomain.com). Only supports domains that you have registered and verified with MailSlurp using dashboard or &#x60;createDomain&#x60; method. | [optional]
 
 ### Return type
 
@@ -293,6 +356,58 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **deleteDomain**
+> deleteDomain($id)
+
+Delete a domain
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+$apiInstance = new MailSlurp\Api\ExtraOperationsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$id = 'id_example'; // string | id
+
+try {
+    $apiInstance->deleteDomain($id);
+} catch (Exception $e) {
+    echo 'Exception when calling ExtraOperationsApi->deleteDomain: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**string**](../Model/.md)| id |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -567,6 +682,110 @@ void (empty response body)
 
  - **Content-Type**: application/json
  - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **getDomain**
+> \MailSlurp\Models\DomainPlusVerificationRecordsAndStatus getDomain($id)
+
+Get a domain
+
+Returns domain verification status and tokens
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+$apiInstance = new MailSlurp\Api\ExtraOperationsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$id = 'id_example'; // string | id
+
+try {
+    $result = $apiInstance->getDomain($id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ExtraOperationsApi->getDomain: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**string**](../Model/.md)| id |
+
+### Return type
+
+[**\MailSlurp\Models\DomainPlusVerificationRecordsAndStatus**](../Model/DomainPlusVerificationRecordsAndStatus.md)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **getDomains**
+> \MailSlurp\Models\DomainPreview[] getDomains()
+
+Get domains
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+$apiInstance = new MailSlurp\Api\ExtraOperationsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+
+try {
+    $result = $apiInstance->getDomains();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ExtraOperationsApi->getDomains: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**\MailSlurp\Models\DomainPreview[]**](../Model/DomainPreview.md)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
