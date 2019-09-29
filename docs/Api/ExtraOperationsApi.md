@@ -20,6 +20,7 @@ Method | HTTP request | Description
 [**getDomains**](ExtraOperationsApi.md#getDomains) | **GET** /domains | Get domains
 [**getEmail**](ExtraOperationsApi.md#getEmail) | **GET** /emails/{emailId} | Get Email Content
 [**getEmails**](ExtraOperationsApi.md#getEmails) | **GET** /inboxes/{inboxId}/emails | List Emails in an Inbox / EmailAddress
+[**getEmailsPaginated**](ExtraOperationsApi.md#getEmailsPaginated) | **GET** /emails | Get all emails
 [**getInbox**](ExtraOperationsApi.md#getInbox) | **GET** /inboxes/{inboxId} | Get Inbox / EmailAddress
 [**getInboxes**](ExtraOperationsApi.md#getInboxes) | **GET** /inboxes | List Inboxes / Email Addresses
 [**getRawEmailContents**](ExtraOperationsApi.md#getRawEmailContents) | **GET** /emails/{emailId}/raw | Get Raw Email Content
@@ -574,7 +575,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **downloadAttachment**
-> downloadAttachment($attachment_id, $email_id)
+> downloadAttachment($attachment_id, $email_id, $api_key)
 
 Get email attachment
 
@@ -598,9 +599,10 @@ $apiInstance = new MailSlurp\Api\ExtraOperationsApi(
 );
 $attachment_id = 'attachment_id_example'; // string | attachmentId
 $email_id = 'email_id_example'; // string | emailId
+$api_key = 'api_key_example'; // string | Can pass apiKey in url for this request if you wish to download the file in a browser
 
 try {
-    $apiInstance->downloadAttachment($attachment_id, $email_id);
+    $apiInstance->downloadAttachment($attachment_id, $email_id, $api_key);
 } catch (Exception $e) {
     echo 'Exception when calling ExtraOperationsApi->downloadAttachment: ', $e->getMessage(), PHP_EOL;
 }
@@ -613,6 +615,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **attachment_id** | **string**| attachmentId |
  **email_id** | [**string**](../Model/.md)| emailId |
+ **api_key** | **string**| Can pass apiKey in url for this request if you wish to download the file in a browser | [optional]
 
 ### Return type
 
@@ -907,6 +910,63 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
+# **getEmailsPaginated**
+> \MailSlurp\Models\PageEmailProjection getEmailsPaginated($page, $size)
+
+Get all emails
+
+Responses are paginated
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+$apiInstance = new MailSlurp\Api\ExtraOperationsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$page = 0; // int | Optional page index in email list pagination
+$size = 20; // int | Optional page size in email list pagination
+
+try {
+    $result = $apiInstance->getEmailsPaginated($page, $size);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ExtraOperationsApi->getEmailsPaginated: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **page** | **int**| Optional page index in email list pagination | [optional] [default to 0]
+ **size** | **int**| Optional page size in email list pagination | [optional] [default to 20]
+
+### Return type
+
+[**\MailSlurp\Models\PageEmailProjection**](../Model/PageEmailProjection.md)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
 # **getInbox**
 > \MailSlurp\Models\Inbox getInbox($inbox_id)
 
@@ -1064,7 +1124,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: text/plain
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 

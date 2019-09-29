@@ -214,21 +214,6 @@ class EmailAnalysis implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['dkim_verdict'] === null) {
-            $invalidProperties[] = "'dkim_verdict' can't be null";
-        }
-        if ($this->container['dmarc_verdict'] === null) {
-            $invalidProperties[] = "'dmarc_verdict' can't be null";
-        }
-        if ($this->container['spam_verdict'] === null) {
-            $invalidProperties[] = "'spam_verdict' can't be null";
-        }
-        if ($this->container['spf_verdict'] === null) {
-            $invalidProperties[] = "'spf_verdict' can't be null";
-        }
-        if ($this->container['virus_verdict'] === null) {
-            $invalidProperties[] = "'virus_verdict' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -247,7 +232,7 @@ class EmailAnalysis implements ModelInterface, ArrayAccess
     /**
      * Gets dkim_verdict
      *
-     * @return string
+     * @return string|null
      */
     public function getDkimVerdict()
     {
@@ -257,7 +242,7 @@ class EmailAnalysis implements ModelInterface, ArrayAccess
     /**
      * Sets dkim_verdict
      *
-     * @param string $dkim_verdict dkim_verdict
+     * @param string|null $dkim_verdict dkim_verdict
      *
      * @return $this
      */
@@ -271,7 +256,7 @@ class EmailAnalysis implements ModelInterface, ArrayAccess
     /**
      * Gets dmarc_verdict
      *
-     * @return string
+     * @return string|null
      */
     public function getDmarcVerdict()
     {
@@ -281,7 +266,7 @@ class EmailAnalysis implements ModelInterface, ArrayAccess
     /**
      * Sets dmarc_verdict
      *
-     * @param string $dmarc_verdict dmarc_verdict
+     * @param string|null $dmarc_verdict dmarc_verdict
      *
      * @return $this
      */
@@ -295,7 +280,7 @@ class EmailAnalysis implements ModelInterface, ArrayAccess
     /**
      * Gets spam_verdict
      *
-     * @return string
+     * @return string|null
      */
     public function getSpamVerdict()
     {
@@ -305,7 +290,7 @@ class EmailAnalysis implements ModelInterface, ArrayAccess
     /**
      * Sets spam_verdict
      *
-     * @param string $spam_verdict spam_verdict
+     * @param string|null $spam_verdict spam_verdict
      *
      * @return $this
      */
@@ -319,7 +304,7 @@ class EmailAnalysis implements ModelInterface, ArrayAccess
     /**
      * Gets spf_verdict
      *
-     * @return string
+     * @return string|null
      */
     public function getSpfVerdict()
     {
@@ -329,7 +314,7 @@ class EmailAnalysis implements ModelInterface, ArrayAccess
     /**
      * Sets spf_verdict
      *
-     * @param string $spf_verdict spf_verdict
+     * @param string|null $spf_verdict spf_verdict
      *
      * @return $this
      */
@@ -343,7 +328,7 @@ class EmailAnalysis implements ModelInterface, ArrayAccess
     /**
      * Gets virus_verdict
      *
-     * @return string
+     * @return string|null
      */
     public function getVirusVerdict()
     {
@@ -353,7 +338,7 @@ class EmailAnalysis implements ModelInterface, ArrayAccess
     /**
      * Sets virus_verdict
      *
-     * @param string $virus_verdict virus_verdict
+     * @param string|null $virus_verdict virus_verdict
      *
      * @return $this
      */

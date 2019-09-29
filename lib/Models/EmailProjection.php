@@ -1,6 +1,6 @@
 <?php
 /**
- * EmailPreview
+ * EmailProjection
  *
  * PHP version 5
  *
@@ -33,15 +33,14 @@ use \ArrayAccess;
 use \MailSlurp\ObjectSerializer;
 
 /**
- * EmailPreview Class Doc Comment
+ * EmailProjection Class Doc Comment
  *
  * @category Class
- * @description Preview of an email message. For full message call the email endpoints with the provided email id.
  * @package  MailSlurp
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class EmailPreview implements ModelInterface, ArrayAccess
+class EmailProjection implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -50,7 +49,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $openAPIModelName = 'EmailPreview';
+    protected static $openAPIModelName = 'EmailProjection';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -60,7 +59,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
     protected static $openAPITypes = [
         'bcc' => 'string[]',
         'cc' => 'string[]',
-        'created' => '\DateTime',
         'created_at' => '\DateTime',
         'id' => 'string',
         'subject' => 'string',
@@ -75,7 +73,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
     protected static $openAPIFormats = [
         'bcc' => null,
         'cc' => null,
-        'created' => 'date-time',
         'created_at' => 'date-time',
         'id' => 'uuid',
         'subject' => null,
@@ -111,7 +108,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
     protected static $attributeMap = [
         'bcc' => 'bcc',
         'cc' => 'cc',
-        'created' => 'created',
         'created_at' => 'createdAt',
         'id' => 'id',
         'subject' => 'subject',
@@ -126,7 +122,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
     protected static $setters = [
         'bcc' => 'setBcc',
         'cc' => 'setCc',
-        'created' => 'setCreated',
         'created_at' => 'setCreatedAt',
         'id' => 'setId',
         'subject' => 'setSubject',
@@ -141,7 +136,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
     protected static $getters = [
         'bcc' => 'getBcc',
         'cc' => 'getCc',
-        'created' => 'getCreated',
         'created_at' => 'getCreatedAt',
         'id' => 'getId',
         'subject' => 'getSubject',
@@ -210,7 +204,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
     {
         $this->container['bcc'] = isset($data['bcc']) ? $data['bcc'] : null;
         $this->container['cc'] = isset($data['cc']) ? $data['cc'] : null;
-        $this->container['created'] = isset($data['created']) ? $data['created'] : null;
         $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
         $this->container['id'] = isset($data['id']) ? $data['id'] : null;
         $this->container['subject'] = isset($data['subject']) ? $data['subject'] : null;
@@ -226,11 +219,11 @@ class EmailPreview implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['created'] === null) {
-            $invalidProperties[] = "'created' can't be null";
-        }
         if ($this->container['created_at'] === null) {
             $invalidProperties[] = "'created_at' can't be null";
+        }
+        if ($this->container['id'] === null) {
+            $invalidProperties[] = "'id' can't be null";
         }
         if ($this->container['to'] === null) {
             $invalidProperties[] = "'to' can't be null";
@@ -299,30 +292,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
     }
 
     /**
-     * Gets created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->container['created'];
-    }
-
-    /**
-     * Sets created
-     *
-     * @param \DateTime $created created
-     *
-     * @return $this
-     */
-    public function setCreated($created)
-    {
-        $this->container['created'] = $created;
-
-        return $this;
-    }
-
-    /**
      * Gets created_at
      *
      * @return \DateTime
@@ -349,7 +318,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
     /**
      * Gets id
      *
-     * @return string|null
+     * @return string
      */
     public function getId()
     {
@@ -359,7 +328,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
     /**
      * Sets id
      *
-     * @param string|null $id ID of the Email.
+     * @param string $id id
      *
      * @return $this
      */

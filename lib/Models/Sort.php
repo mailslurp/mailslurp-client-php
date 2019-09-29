@@ -1,6 +1,6 @@
 <?php
 /**
- * EmailPreview
+ * Sort
  *
  * PHP version 5
  *
@@ -33,15 +33,14 @@ use \ArrayAccess;
 use \MailSlurp\ObjectSerializer;
 
 /**
- * EmailPreview Class Doc Comment
+ * Sort Class Doc Comment
  *
  * @category Class
- * @description Preview of an email message. For full message call the email endpoints with the provided email id.
  * @package  MailSlurp
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class EmailPreview implements ModelInterface, ArrayAccess
+class Sort implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -50,7 +49,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $openAPIModelName = 'EmailPreview';
+    protected static $openAPIModelName = 'Sort';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,13 +57,8 @@ class EmailPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPITypes = [
-        'bcc' => 'string[]',
-        'cc' => 'string[]',
-        'created' => '\DateTime',
-        'created_at' => '\DateTime',
-        'id' => 'string',
-        'subject' => 'string',
-        'to' => 'string[]'
+        'sorted' => 'bool',
+        'unsorted' => 'bool'
     ];
 
     /**
@@ -73,13 +67,8 @@ class EmailPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPIFormats = [
-        'bcc' => null,
-        'cc' => null,
-        'created' => 'date-time',
-        'created_at' => 'date-time',
-        'id' => 'uuid',
-        'subject' => null,
-        'to' => null
+        'sorted' => null,
+        'unsorted' => null
     ];
 
     /**
@@ -109,13 +98,8 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'bcc' => 'bcc',
-        'cc' => 'cc',
-        'created' => 'created',
-        'created_at' => 'createdAt',
-        'id' => 'id',
-        'subject' => 'subject',
-        'to' => 'to'
+        'sorted' => 'sorted',
+        'unsorted' => 'unsorted'
     ];
 
     /**
@@ -124,13 +108,8 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'bcc' => 'setBcc',
-        'cc' => 'setCc',
-        'created' => 'setCreated',
-        'created_at' => 'setCreatedAt',
-        'id' => 'setId',
-        'subject' => 'setSubject',
-        'to' => 'setTo'
+        'sorted' => 'setSorted',
+        'unsorted' => 'setUnsorted'
     ];
 
     /**
@@ -139,13 +118,8 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'bcc' => 'getBcc',
-        'cc' => 'getCc',
-        'created' => 'getCreated',
-        'created_at' => 'getCreatedAt',
-        'id' => 'getId',
-        'subject' => 'getSubject',
-        'to' => 'getTo'
+        'sorted' => 'getSorted',
+        'unsorted' => 'getUnsorted'
     ];
 
     /**
@@ -208,13 +182,8 @@ class EmailPreview implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['bcc'] = isset($data['bcc']) ? $data['bcc'] : null;
-        $this->container['cc'] = isset($data['cc']) ? $data['cc'] : null;
-        $this->container['created'] = isset($data['created']) ? $data['created'] : null;
-        $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['subject'] = isset($data['subject']) ? $data['subject'] : null;
-        $this->container['to'] = isset($data['to']) ? $data['to'] : null;
+        $this->container['sorted'] = isset($data['sorted']) ? $data['sorted'] : null;
+        $this->container['unsorted'] = isset($data['unsorted']) ? $data['unsorted'] : null;
     }
 
     /**
@@ -226,15 +195,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['created'] === null) {
-            $invalidProperties[] = "'created' can't be null";
-        }
-        if ($this->container['created_at'] === null) {
-            $invalidProperties[] = "'created_at' can't be null";
-        }
-        if ($this->container['to'] === null) {
-            $invalidProperties[] = "'to' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -251,169 +211,49 @@ class EmailPreview implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets bcc
+     * Gets sorted
      *
-     * @return string[]|null
+     * @return bool|null
      */
-    public function getBcc()
+    public function getSorted()
     {
-        return $this->container['bcc'];
+        return $this->container['sorted'];
     }
 
     /**
-     * Sets bcc
+     * Sets sorted
      *
-     * @param string[]|null $bcc bcc
+     * @param bool|null $sorted sorted
      *
      * @return $this
      */
-    public function setBcc($bcc)
+    public function setSorted($sorted)
     {
-        $this->container['bcc'] = $bcc;
+        $this->container['sorted'] = $sorted;
 
         return $this;
     }
 
     /**
-     * Gets cc
+     * Gets unsorted
      *
-     * @return string[]|null
+     * @return bool|null
      */
-    public function getCc()
+    public function getUnsorted()
     {
-        return $this->container['cc'];
+        return $this->container['unsorted'];
     }
 
     /**
-     * Sets cc
+     * Sets unsorted
      *
-     * @param string[]|null $cc cc
+     * @param bool|null $unsorted unsorted
      *
      * @return $this
      */
-    public function setCc($cc)
+    public function setUnsorted($unsorted)
     {
-        $this->container['cc'] = $cc;
-
-        return $this;
-    }
-
-    /**
-     * Gets created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->container['created'];
-    }
-
-    /**
-     * Sets created
-     *
-     * @param \DateTime $created created
-     *
-     * @return $this
-     */
-    public function setCreated($created)
-    {
-        $this->container['created'] = $created;
-
-        return $this;
-    }
-
-    /**
-     * Gets created_at
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->container['created_at'];
-    }
-
-    /**
-     * Sets created_at
-     *
-     * @param \DateTime $created_at created_at
-     *
-     * @return $this
-     */
-    public function setCreatedAt($created_at)
-    {
-        $this->container['created_at'] = $created_at;
-
-        return $this;
-    }
-
-    /**
-     * Gets id
-     *
-     * @return string|null
-     */
-    public function getId()
-    {
-        return $this->container['id'];
-    }
-
-    /**
-     * Sets id
-     *
-     * @param string|null $id ID of the Email.
-     *
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->container['id'] = $id;
-
-        return $this;
-    }
-
-    /**
-     * Gets subject
-     *
-     * @return string|null
-     */
-    public function getSubject()
-    {
-        return $this->container['subject'];
-    }
-
-    /**
-     * Sets subject
-     *
-     * @param string|null $subject subject
-     *
-     * @return $this
-     */
-    public function setSubject($subject)
-    {
-        $this->container['subject'] = $subject;
-
-        return $this;
-    }
-
-    /**
-     * Gets to
-     *
-     * @return string[]
-     */
-    public function getTo()
-    {
-        return $this->container['to'];
-    }
-
-    /**
-     * Sets to
-     *
-     * @param string[] $to to
-     *
-     * @return $this
-     */
-    public function setTo($to)
-    {
-        $this->container['to'] = $to;
+        $this->container['unsorted'] = $unsorted;
 
         return $this;
     }

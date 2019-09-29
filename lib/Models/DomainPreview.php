@@ -58,6 +58,7 @@ class DomainPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPITypes = [
+        'created_at' => '\DateTime',
         'domain' => 'string',
         'id' => 'string'
     ];
@@ -68,6 +69,7 @@ class DomainPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPIFormats = [
+        'created_at' => 'date-time',
         'domain' => null,
         'id' => 'uuid'
     ];
@@ -99,6 +101,7 @@ class DomainPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
+        'created_at' => 'createdAt',
         'domain' => 'domain',
         'id' => 'id'
     ];
@@ -109,6 +112,7 @@ class DomainPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
+        'created_at' => 'setCreatedAt',
         'domain' => 'setDomain',
         'id' => 'setId'
     ];
@@ -119,6 +123,7 @@ class DomainPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
+        'created_at' => 'getCreatedAt',
         'domain' => 'getDomain',
         'id' => 'getId'
     ];
@@ -183,6 +188,7 @@ class DomainPreview implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
+        $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
         $this->container['domain'] = isset($data['domain']) ? $data['domain'] : null;
         $this->container['id'] = isset($data['id']) ? $data['id'] : null;
     }
@@ -196,6 +202,9 @@ class DomainPreview implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
+        if ($this->container['created_at'] === null) {
+            $invalidProperties[] = "'created_at' can't be null";
+        }
         if ($this->container['domain'] === null) {
             $invalidProperties[] = "'domain' can't be null";
         }
@@ -216,6 +225,30 @@ class DomainPreview implements ModelInterface, ArrayAccess
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets created_at
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->container['created_at'];
+    }
+
+    /**
+     * Sets created_at
+     *
+     * @param \DateTime $created_at created_at
+     *
+     * @return $this
+     */
+    public function setCreatedAt($created_at)
+    {
+        $this->container['created_at'] = $created_at;
+
+        return $this;
+    }
 
     /**
      * Gets domain

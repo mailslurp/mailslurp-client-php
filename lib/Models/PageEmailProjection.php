@@ -1,6 +1,6 @@
 <?php
 /**
- * EmailPreview
+ * PageEmailProjection
  *
  * PHP version 5
  *
@@ -33,15 +33,14 @@ use \ArrayAccess;
 use \MailSlurp\ObjectSerializer;
 
 /**
- * EmailPreview Class Doc Comment
+ * PageEmailProjection Class Doc Comment
  *
  * @category Class
- * @description Preview of an email message. For full message call the email endpoints with the provided email id.
  * @package  MailSlurp
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class EmailPreview implements ModelInterface, ArrayAccess
+class PageEmailProjection implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -50,7 +49,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $openAPIModelName = 'EmailPreview';
+    protected static $openAPIModelName = 'Page«EmailProjection»';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,13 +57,16 @@ class EmailPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPITypes = [
-        'bcc' => 'string[]',
-        'cc' => 'string[]',
-        'created' => '\DateTime',
-        'created_at' => '\DateTime',
-        'id' => 'string',
-        'subject' => 'string',
-        'to' => 'string[]'
+        'content' => '\MailSlurp\Models\EmailProjection[]',
+        'first' => 'bool',
+        'last' => 'bool',
+        'number' => 'int',
+        'number_of_elements' => 'int',
+        'pageable' => '\MailSlurp\Models\Pageable',
+        'size' => 'int',
+        'sort' => '\MailSlurp\Models\Sort',
+        'total_elements' => 'int',
+        'total_pages' => 'int'
     ];
 
     /**
@@ -73,13 +75,16 @@ class EmailPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPIFormats = [
-        'bcc' => null,
-        'cc' => null,
-        'created' => 'date-time',
-        'created_at' => 'date-time',
-        'id' => 'uuid',
-        'subject' => null,
-        'to' => null
+        'content' => null,
+        'first' => null,
+        'last' => null,
+        'number' => 'int32',
+        'number_of_elements' => 'int32',
+        'pageable' => null,
+        'size' => 'int32',
+        'sort' => null,
+        'total_elements' => 'int64',
+        'total_pages' => 'int32'
     ];
 
     /**
@@ -109,13 +114,16 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'bcc' => 'bcc',
-        'cc' => 'cc',
-        'created' => 'created',
-        'created_at' => 'createdAt',
-        'id' => 'id',
-        'subject' => 'subject',
-        'to' => 'to'
+        'content' => 'content',
+        'first' => 'first',
+        'last' => 'last',
+        'number' => 'number',
+        'number_of_elements' => 'numberOfElements',
+        'pageable' => 'pageable',
+        'size' => 'size',
+        'sort' => 'sort',
+        'total_elements' => 'totalElements',
+        'total_pages' => 'totalPages'
     ];
 
     /**
@@ -124,13 +132,16 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'bcc' => 'setBcc',
-        'cc' => 'setCc',
-        'created' => 'setCreated',
-        'created_at' => 'setCreatedAt',
-        'id' => 'setId',
-        'subject' => 'setSubject',
-        'to' => 'setTo'
+        'content' => 'setContent',
+        'first' => 'setFirst',
+        'last' => 'setLast',
+        'number' => 'setNumber',
+        'number_of_elements' => 'setNumberOfElements',
+        'pageable' => 'setPageable',
+        'size' => 'setSize',
+        'sort' => 'setSort',
+        'total_elements' => 'setTotalElements',
+        'total_pages' => 'setTotalPages'
     ];
 
     /**
@@ -139,13 +150,16 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'bcc' => 'getBcc',
-        'cc' => 'getCc',
-        'created' => 'getCreated',
-        'created_at' => 'getCreatedAt',
-        'id' => 'getId',
-        'subject' => 'getSubject',
-        'to' => 'getTo'
+        'content' => 'getContent',
+        'first' => 'getFirst',
+        'last' => 'getLast',
+        'number' => 'getNumber',
+        'number_of_elements' => 'getNumberOfElements',
+        'pageable' => 'getPageable',
+        'size' => 'getSize',
+        'sort' => 'getSort',
+        'total_elements' => 'getTotalElements',
+        'total_pages' => 'getTotalPages'
     ];
 
     /**
@@ -208,13 +222,16 @@ class EmailPreview implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['bcc'] = isset($data['bcc']) ? $data['bcc'] : null;
-        $this->container['cc'] = isset($data['cc']) ? $data['cc'] : null;
-        $this->container['created'] = isset($data['created']) ? $data['created'] : null;
-        $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['subject'] = isset($data['subject']) ? $data['subject'] : null;
-        $this->container['to'] = isset($data['to']) ? $data['to'] : null;
+        $this->container['content'] = isset($data['content']) ? $data['content'] : null;
+        $this->container['first'] = isset($data['first']) ? $data['first'] : null;
+        $this->container['last'] = isset($data['last']) ? $data['last'] : null;
+        $this->container['number'] = isset($data['number']) ? $data['number'] : null;
+        $this->container['number_of_elements'] = isset($data['number_of_elements']) ? $data['number_of_elements'] : null;
+        $this->container['pageable'] = isset($data['pageable']) ? $data['pageable'] : null;
+        $this->container['size'] = isset($data['size']) ? $data['size'] : null;
+        $this->container['sort'] = isset($data['sort']) ? $data['sort'] : null;
+        $this->container['total_elements'] = isset($data['total_elements']) ? $data['total_elements'] : null;
+        $this->container['total_pages'] = isset($data['total_pages']) ? $data['total_pages'] : null;
     }
 
     /**
@@ -226,15 +243,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['created'] === null) {
-            $invalidProperties[] = "'created' can't be null";
-        }
-        if ($this->container['created_at'] === null) {
-            $invalidProperties[] = "'created_at' can't be null";
-        }
-        if ($this->container['to'] === null) {
-            $invalidProperties[] = "'to' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -251,169 +259,241 @@ class EmailPreview implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets bcc
+     * Gets content
      *
-     * @return string[]|null
+     * @return \MailSlurp\Models\EmailProjection[]|null
      */
-    public function getBcc()
+    public function getContent()
     {
-        return $this->container['bcc'];
+        return $this->container['content'];
     }
 
     /**
-     * Sets bcc
+     * Sets content
      *
-     * @param string[]|null $bcc bcc
+     * @param \MailSlurp\Models\EmailProjection[]|null $content content
      *
      * @return $this
      */
-    public function setBcc($bcc)
+    public function setContent($content)
     {
-        $this->container['bcc'] = $bcc;
+        $this->container['content'] = $content;
 
         return $this;
     }
 
     /**
-     * Gets cc
+     * Gets first
      *
-     * @return string[]|null
+     * @return bool|null
      */
-    public function getCc()
+    public function getFirst()
     {
-        return $this->container['cc'];
+        return $this->container['first'];
     }
 
     /**
-     * Sets cc
+     * Sets first
      *
-     * @param string[]|null $cc cc
+     * @param bool|null $first first
      *
      * @return $this
      */
-    public function setCc($cc)
+    public function setFirst($first)
     {
-        $this->container['cc'] = $cc;
+        $this->container['first'] = $first;
 
         return $this;
     }
 
     /**
-     * Gets created
+     * Gets last
      *
-     * @return \DateTime
+     * @return bool|null
      */
-    public function getCreated()
+    public function getLast()
     {
-        return $this->container['created'];
+        return $this->container['last'];
     }
 
     /**
-     * Sets created
+     * Sets last
      *
-     * @param \DateTime $created created
+     * @param bool|null $last last
      *
      * @return $this
      */
-    public function setCreated($created)
+    public function setLast($last)
     {
-        $this->container['created'] = $created;
+        $this->container['last'] = $last;
 
         return $this;
     }
 
     /**
-     * Gets created_at
+     * Gets number
      *
-     * @return \DateTime
+     * @return int|null
      */
-    public function getCreatedAt()
+    public function getNumber()
     {
-        return $this->container['created_at'];
+        return $this->container['number'];
     }
 
     /**
-     * Sets created_at
+     * Sets number
      *
-     * @param \DateTime $created_at created_at
+     * @param int|null $number number
      *
      * @return $this
      */
-    public function setCreatedAt($created_at)
+    public function setNumber($number)
     {
-        $this->container['created_at'] = $created_at;
+        $this->container['number'] = $number;
 
         return $this;
     }
 
     /**
-     * Gets id
+     * Gets number_of_elements
      *
-     * @return string|null
+     * @return int|null
      */
-    public function getId()
+    public function getNumberOfElements()
     {
-        return $this->container['id'];
+        return $this->container['number_of_elements'];
     }
 
     /**
-     * Sets id
+     * Sets number_of_elements
      *
-     * @param string|null $id ID of the Email.
+     * @param int|null $number_of_elements number_of_elements
      *
      * @return $this
      */
-    public function setId($id)
+    public function setNumberOfElements($number_of_elements)
     {
-        $this->container['id'] = $id;
+        $this->container['number_of_elements'] = $number_of_elements;
 
         return $this;
     }
 
     /**
-     * Gets subject
+     * Gets pageable
      *
-     * @return string|null
+     * @return \MailSlurp\Models\Pageable|null
      */
-    public function getSubject()
+    public function getPageable()
     {
-        return $this->container['subject'];
+        return $this->container['pageable'];
     }
 
     /**
-     * Sets subject
+     * Sets pageable
      *
-     * @param string|null $subject subject
+     * @param \MailSlurp\Models\Pageable|null $pageable pageable
      *
      * @return $this
      */
-    public function setSubject($subject)
+    public function setPageable($pageable)
     {
-        $this->container['subject'] = $subject;
+        $this->container['pageable'] = $pageable;
 
         return $this;
     }
 
     /**
-     * Gets to
+     * Gets size
      *
-     * @return string[]
+     * @return int|null
      */
-    public function getTo()
+    public function getSize()
     {
-        return $this->container['to'];
+        return $this->container['size'];
     }
 
     /**
-     * Sets to
+     * Sets size
      *
-     * @param string[] $to to
+     * @param int|null $size size
      *
      * @return $this
      */
-    public function setTo($to)
+    public function setSize($size)
     {
-        $this->container['to'] = $to;
+        $this->container['size'] = $size;
+
+        return $this;
+    }
+
+    /**
+     * Gets sort
+     *
+     * @return \MailSlurp\Models\Sort|null
+     */
+    public function getSort()
+    {
+        return $this->container['sort'];
+    }
+
+    /**
+     * Sets sort
+     *
+     * @param \MailSlurp\Models\Sort|null $sort sort
+     *
+     * @return $this
+     */
+    public function setSort($sort)
+    {
+        $this->container['sort'] = $sort;
+
+        return $this;
+    }
+
+    /**
+     * Gets total_elements
+     *
+     * @return int|null
+     */
+    public function getTotalElements()
+    {
+        return $this->container['total_elements'];
+    }
+
+    /**
+     * Sets total_elements
+     *
+     * @param int|null $total_elements total_elements
+     *
+     * @return $this
+     */
+    public function setTotalElements($total_elements)
+    {
+        $this->container['total_elements'] = $total_elements;
+
+        return $this;
+    }
+
+    /**
+     * Gets total_pages
+     *
+     * @return int|null
+     */
+    public function getTotalPages()
+    {
+        return $this->container['total_pages'];
+    }
+
+    /**
+     * Sets total_pages
+     *
+     * @param int|null $total_pages total_pages
+     *
+     * @return $this
+     */
+    public function setTotalPages($total_pages)
+    {
+        $this->container['total_pages'] = $total_pages;
 
         return $this;
     }

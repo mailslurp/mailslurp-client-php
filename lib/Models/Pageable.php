@@ -1,6 +1,6 @@
 <?php
 /**
- * EmailPreview
+ * Pageable
  *
  * PHP version 5
  *
@@ -33,15 +33,14 @@ use \ArrayAccess;
 use \MailSlurp\ObjectSerializer;
 
 /**
- * EmailPreview Class Doc Comment
+ * Pageable Class Doc Comment
  *
  * @category Class
- * @description Preview of an email message. For full message call the email endpoints with the provided email id.
  * @package  MailSlurp
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class EmailPreview implements ModelInterface, ArrayAccess
+class Pageable implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -50,7 +49,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $openAPIModelName = 'EmailPreview';
+    protected static $openAPIModelName = 'Pageable';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,13 +57,12 @@ class EmailPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPITypes = [
-        'bcc' => 'string[]',
-        'cc' => 'string[]',
-        'created' => '\DateTime',
-        'created_at' => '\DateTime',
-        'id' => 'string',
-        'subject' => 'string',
-        'to' => 'string[]'
+        'offset' => 'int',
+        'page_number' => 'int',
+        'page_size' => 'int',
+        'paged' => 'bool',
+        'sort' => '\MailSlurp\Models\Sort',
+        'unpaged' => 'bool'
     ];
 
     /**
@@ -73,13 +71,12 @@ class EmailPreview implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPIFormats = [
-        'bcc' => null,
-        'cc' => null,
-        'created' => 'date-time',
-        'created_at' => 'date-time',
-        'id' => 'uuid',
-        'subject' => null,
-        'to' => null
+        'offset' => 'int64',
+        'page_number' => 'int32',
+        'page_size' => 'int32',
+        'paged' => null,
+        'sort' => null,
+        'unpaged' => null
     ];
 
     /**
@@ -109,13 +106,12 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'bcc' => 'bcc',
-        'cc' => 'cc',
-        'created' => 'created',
-        'created_at' => 'createdAt',
-        'id' => 'id',
-        'subject' => 'subject',
-        'to' => 'to'
+        'offset' => 'offset',
+        'page_number' => 'pageNumber',
+        'page_size' => 'pageSize',
+        'paged' => 'paged',
+        'sort' => 'sort',
+        'unpaged' => 'unpaged'
     ];
 
     /**
@@ -124,13 +120,12 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'bcc' => 'setBcc',
-        'cc' => 'setCc',
-        'created' => 'setCreated',
-        'created_at' => 'setCreatedAt',
-        'id' => 'setId',
-        'subject' => 'setSubject',
-        'to' => 'setTo'
+        'offset' => 'setOffset',
+        'page_number' => 'setPageNumber',
+        'page_size' => 'setPageSize',
+        'paged' => 'setPaged',
+        'sort' => 'setSort',
+        'unpaged' => 'setUnpaged'
     ];
 
     /**
@@ -139,13 +134,12 @@ class EmailPreview implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'bcc' => 'getBcc',
-        'cc' => 'getCc',
-        'created' => 'getCreated',
-        'created_at' => 'getCreatedAt',
-        'id' => 'getId',
-        'subject' => 'getSubject',
-        'to' => 'getTo'
+        'offset' => 'getOffset',
+        'page_number' => 'getPageNumber',
+        'page_size' => 'getPageSize',
+        'paged' => 'getPaged',
+        'sort' => 'getSort',
+        'unpaged' => 'getUnpaged'
     ];
 
     /**
@@ -208,13 +202,12 @@ class EmailPreview implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['bcc'] = isset($data['bcc']) ? $data['bcc'] : null;
-        $this->container['cc'] = isset($data['cc']) ? $data['cc'] : null;
-        $this->container['created'] = isset($data['created']) ? $data['created'] : null;
-        $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['subject'] = isset($data['subject']) ? $data['subject'] : null;
-        $this->container['to'] = isset($data['to']) ? $data['to'] : null;
+        $this->container['offset'] = isset($data['offset']) ? $data['offset'] : null;
+        $this->container['page_number'] = isset($data['page_number']) ? $data['page_number'] : null;
+        $this->container['page_size'] = isset($data['page_size']) ? $data['page_size'] : null;
+        $this->container['paged'] = isset($data['paged']) ? $data['paged'] : null;
+        $this->container['sort'] = isset($data['sort']) ? $data['sort'] : null;
+        $this->container['unpaged'] = isset($data['unpaged']) ? $data['unpaged'] : null;
     }
 
     /**
@@ -226,15 +219,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['created'] === null) {
-            $invalidProperties[] = "'created' can't be null";
-        }
-        if ($this->container['created_at'] === null) {
-            $invalidProperties[] = "'created_at' can't be null";
-        }
-        if ($this->container['to'] === null) {
-            $invalidProperties[] = "'to' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -251,169 +235,145 @@ class EmailPreview implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets bcc
+     * Gets offset
      *
-     * @return string[]|null
+     * @return int|null
      */
-    public function getBcc()
+    public function getOffset()
     {
-        return $this->container['bcc'];
+        return $this->container['offset'];
     }
 
     /**
-     * Sets bcc
+     * Sets offset
      *
-     * @param string[]|null $bcc bcc
+     * @param int|null $offset offset
      *
      * @return $this
      */
-    public function setBcc($bcc)
+    public function setOffset($offset)
     {
-        $this->container['bcc'] = $bcc;
+        $this->container['offset'] = $offset;
 
         return $this;
     }
 
     /**
-     * Gets cc
+     * Gets page_number
      *
-     * @return string[]|null
+     * @return int|null
      */
-    public function getCc()
+    public function getPageNumber()
     {
-        return $this->container['cc'];
+        return $this->container['page_number'];
     }
 
     /**
-     * Sets cc
+     * Sets page_number
      *
-     * @param string[]|null $cc cc
+     * @param int|null $page_number page_number
      *
      * @return $this
      */
-    public function setCc($cc)
+    public function setPageNumber($page_number)
     {
-        $this->container['cc'] = $cc;
+        $this->container['page_number'] = $page_number;
 
         return $this;
     }
 
     /**
-     * Gets created
+     * Gets page_size
      *
-     * @return \DateTime
+     * @return int|null
      */
-    public function getCreated()
+    public function getPageSize()
     {
-        return $this->container['created'];
+        return $this->container['page_size'];
     }
 
     /**
-     * Sets created
+     * Sets page_size
      *
-     * @param \DateTime $created created
+     * @param int|null $page_size page_size
      *
      * @return $this
      */
-    public function setCreated($created)
+    public function setPageSize($page_size)
     {
-        $this->container['created'] = $created;
+        $this->container['page_size'] = $page_size;
 
         return $this;
     }
 
     /**
-     * Gets created_at
+     * Gets paged
      *
-     * @return \DateTime
+     * @return bool|null
      */
-    public function getCreatedAt()
+    public function getPaged()
     {
-        return $this->container['created_at'];
+        return $this->container['paged'];
     }
 
     /**
-     * Sets created_at
+     * Sets paged
      *
-     * @param \DateTime $created_at created_at
+     * @param bool|null $paged paged
      *
      * @return $this
      */
-    public function setCreatedAt($created_at)
+    public function setPaged($paged)
     {
-        $this->container['created_at'] = $created_at;
+        $this->container['paged'] = $paged;
 
         return $this;
     }
 
     /**
-     * Gets id
+     * Gets sort
      *
-     * @return string|null
+     * @return \MailSlurp\Models\Sort|null
      */
-    public function getId()
+    public function getSort()
     {
-        return $this->container['id'];
+        return $this->container['sort'];
     }
 
     /**
-     * Sets id
+     * Sets sort
      *
-     * @param string|null $id ID of the Email.
+     * @param \MailSlurp\Models\Sort|null $sort sort
      *
      * @return $this
      */
-    public function setId($id)
+    public function setSort($sort)
     {
-        $this->container['id'] = $id;
+        $this->container['sort'] = $sort;
 
         return $this;
     }
 
     /**
-     * Gets subject
+     * Gets unpaged
      *
-     * @return string|null
+     * @return bool|null
      */
-    public function getSubject()
+    public function getUnpaged()
     {
-        return $this->container['subject'];
+        return $this->container['unpaged'];
     }
 
     /**
-     * Sets subject
+     * Sets unpaged
      *
-     * @param string|null $subject subject
+     * @param bool|null $unpaged unpaged
      *
      * @return $this
      */
-    public function setSubject($subject)
+    public function setUnpaged($unpaged)
     {
-        $this->container['subject'] = $subject;
-
-        return $this;
-    }
-
-    /**
-     * Gets to
-     *
-     * @return string[]
-     */
-    public function getTo()
-    {
-        return $this->container['to'];
-    }
-
-    /**
-     * Sets to
-     *
-     * @param string[] $to to
-     *
-     * @return $this
-     */
-    public function setTo($to)
-    {
-        $this->container['to'] = $to;
+        $this->container['unpaged'] = $unpaged;
 
         return $this;
     }
