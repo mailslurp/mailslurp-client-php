@@ -572,8 +572,8 @@ $apiInstance = new MailSlurp\Api\InboxControllerApi(
     new GuzzleHttp\Client(),
     $config
 );
-$inbox_id = 'inbox_id_example'; // string | inboxId
-$send_email_options = new \MailSlurp\Models\SendEmailOptions(); // \MailSlurp\Models\SendEmailOptions | sendEmailOptions
+$inbox_id = 'inbox_id_example'; // string | ID of the inbox you want to send the email from
+$send_email_options = new \MailSlurp\Models\SendEmailOptions(); // \MailSlurp\Models\SendEmailOptions | Options for the email
 
 try {
     $apiInstance->sendEmail($inbox_id, $send_email_options);
@@ -588,8 +588,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **inbox_id** | [**string**](../Model/.md)| inboxId |
- **send_email_options** | [**\MailSlurp\Models\SendEmailOptions**](../Model/SendEmailOptions.md)| sendEmailOptions |
+ **inbox_id** | [**string**](../Model/.md)| ID of the inbox you want to send the email from |
+ **send_email_options** | [**\MailSlurp\Models\SendEmailOptions**](../Model/SendEmailOptions.md)| Options for the email | [optional]
 
 ### Return type
 

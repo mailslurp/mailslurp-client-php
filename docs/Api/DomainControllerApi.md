@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 ## createDomain
 
-> \MailSlurp\Models\DomainPlusVerificationRecordsAndStatus createDomain($domain_options)
+> \MailSlurp\Models\DomainDto createDomain($domain_options)
 
 Create Domain
 
@@ -58,7 +58,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\MailSlurp\Models\DomainPlusVerificationRecordsAndStatus**](../Model/DomainPlusVerificationRecordsAndStatus.md)
+[**\MailSlurp\Models\DomainDto**](../Model/DomainDto.md)
 
 ### Authorization
 
@@ -138,7 +138,7 @@ void (empty response body)
 
 ## getDomain
 
-> \MailSlurp\Models\DomainPlusVerificationRecordsAndStatus getDomain($id)
+> \MailSlurp\Models\DomainDto getDomain($id)
 
 Get a domain
 
@@ -183,7 +183,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\MailSlurp\Models\DomainPlusVerificationRecordsAndStatus**](../Model/DomainPlusVerificationRecordsAndStatus.md)
+[**\MailSlurp\Models\DomainDto**](../Model/DomainDto.md)
 
 ### Authorization
 

@@ -429,7 +429,7 @@ $apiInstance = new MailSlurp\Api\CommonActionsControllerApi(
     new GuzzleHttp\Client(),
     $config
 );
-$inbox_id = 'inbox_id_example'; // string | Id of the inbox we are fetching emails from
+$inbox_id = 'inbox_id_example'; // string | Id of the inbox you are fetching emails from
 $index = 56; // int | Zero based index of the email to wait for
 $timeout = 56; // int | Max milliseconds to wait
 $unread_only = false; // bool | Optional filter for unread only
@@ -448,7 +448,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **inbox_id** | [**string**](../Model/.md)| Id of the inbox we are fetching emails from | [optional]
+ **inbox_id** | [**string**](../Model/.md)| Id of the inbox you are fetching emails from | [optional]
  **index** | **int**| Zero based index of the email to wait for | [optional]
  **timeout** | **int**| Max milliseconds to wait | [optional]
  **unread_only** | **bool**| Optional filter for unread only | [optional] [default to false]

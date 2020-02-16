@@ -1,6 +1,6 @@
 <?php
 /**
- * SetInboxFavouritedOptions
+ * DomainDto
  *
  * PHP version 5
  *
@@ -33,15 +33,15 @@ use \ArrayAccess;
 use \MailSlurp\ObjectSerializer;
 
 /**
- * SetInboxFavouritedOptions Class Doc Comment
+ * DomainDto Class Doc Comment
  *
  * @category Class
- * @description Options for setting inbox favourite state
+ * @description Domain plus verification records and status
  * @package  MailSlurp
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class SetInboxFavouritedOptions implements ModelInterface, ArrayAccess
+class DomainDto implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -50,7 +50,7 @@ class SetInboxFavouritedOptions implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $openAPIModelName = 'SetInboxFavouritedOptions';
+    protected static $openAPIModelName = 'DomainDto';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,7 +58,13 @@ class SetInboxFavouritedOptions implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPITypes = [
-        'state' => 'bool'
+        'created_at' => '\DateTime',
+        'domain' => 'string',
+        'id' => 'string',
+        'is_verified' => 'bool',
+        'updated_at' => '\DateTime',
+        'user_id' => 'string',
+        'verification_token' => 'string'
     ];
 
     /**
@@ -67,7 +73,13 @@ class SetInboxFavouritedOptions implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPIFormats = [
-        'state' => null
+        'created_at' => 'date-time',
+        'domain' => null,
+        'id' => 'uuid',
+        'is_verified' => null,
+        'updated_at' => 'date-time',
+        'user_id' => 'uuid',
+        'verification_token' => null
     ];
 
     /**
@@ -97,7 +109,13 @@ class SetInboxFavouritedOptions implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'state' => 'state'
+        'created_at' => 'createdAt',
+        'domain' => 'domain',
+        'id' => 'id',
+        'is_verified' => 'isVerified',
+        'updated_at' => 'updatedAt',
+        'user_id' => 'userId',
+        'verification_token' => 'verificationToken'
     ];
 
     /**
@@ -106,7 +124,13 @@ class SetInboxFavouritedOptions implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'state' => 'setState'
+        'created_at' => 'setCreatedAt',
+        'domain' => 'setDomain',
+        'id' => 'setId',
+        'is_verified' => 'setIsVerified',
+        'updated_at' => 'setUpdatedAt',
+        'user_id' => 'setUserId',
+        'verification_token' => 'setVerificationToken'
     ];
 
     /**
@@ -115,7 +139,13 @@ class SetInboxFavouritedOptions implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'state' => 'getState'
+        'created_at' => 'getCreatedAt',
+        'domain' => 'getDomain',
+        'id' => 'getId',
+        'is_verified' => 'getIsVerified',
+        'updated_at' => 'getUpdatedAt',
+        'user_id' => 'getUserId',
+        'verification_token' => 'getVerificationToken'
     ];
 
     /**
@@ -178,7 +208,13 @@ class SetInboxFavouritedOptions implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['state'] = isset($data['state']) ? $data['state'] : null;
+        $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
+        $this->container['domain'] = isset($data['domain']) ? $data['domain'] : null;
+        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
+        $this->container['is_verified'] = isset($data['is_verified']) ? $data['is_verified'] : null;
+        $this->container['updated_at'] = isset($data['updated_at']) ? $data['updated_at'] : null;
+        $this->container['user_id'] = isset($data['user_id']) ? $data['user_id'] : null;
+        $this->container['verification_token'] = isset($data['verification_token']) ? $data['verification_token'] : null;
     }
 
     /**
@@ -190,6 +226,27 @@ class SetInboxFavouritedOptions implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
+        if ($this->container['created_at'] === null) {
+            $invalidProperties[] = "'created_at' can't be null";
+        }
+        if ($this->container['domain'] === null) {
+            $invalidProperties[] = "'domain' can't be null";
+        }
+        if ($this->container['id'] === null) {
+            $invalidProperties[] = "'id' can't be null";
+        }
+        if ($this->container['is_verified'] === null) {
+            $invalidProperties[] = "'is_verified' can't be null";
+        }
+        if ($this->container['updated_at'] === null) {
+            $invalidProperties[] = "'updated_at' can't be null";
+        }
+        if ($this->container['user_id'] === null) {
+            $invalidProperties[] = "'user_id' can't be null";
+        }
+        if ($this->container['verification_token'] === null) {
+            $invalidProperties[] = "'verification_token' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -206,25 +263,169 @@ class SetInboxFavouritedOptions implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets state
+     * Gets created_at
      *
-     * @return bool|null
+     * @return \DateTime
      */
-    public function getState()
+    public function getCreatedAt()
     {
-        return $this->container['state'];
+        return $this->container['created_at'];
     }
 
     /**
-     * Sets state
+     * Sets created_at
      *
-     * @param bool|null $state Should the inbox be favourited?
+     * @param \DateTime $created_at created_at
      *
      * @return $this
      */
-    public function setState($state)
+    public function setCreatedAt($created_at)
     {
-        $this->container['state'] = $state;
+        $this->container['created_at'] = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets domain
+     *
+     * @return string
+     */
+    public function getDomain()
+    {
+        return $this->container['domain'];
+    }
+
+    /**
+     * Sets domain
+     *
+     * @param string $domain domain
+     *
+     * @return $this
+     */
+    public function setDomain($domain)
+    {
+        $this->container['domain'] = $domain;
+
+        return $this;
+    }
+
+    /**
+     * Gets id
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->container['id'];
+    }
+
+    /**
+     * Sets id
+     *
+     * @param string $id id
+     *
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->container['id'] = $id;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_verified
+     *
+     * @return bool
+     */
+    public function getIsVerified()
+    {
+        return $this->container['is_verified'];
+    }
+
+    /**
+     * Sets is_verified
+     *
+     * @param bool $is_verified is_verified
+     *
+     * @return $this
+     */
+    public function setIsVerified($is_verified)
+    {
+        $this->container['is_verified'] = $is_verified;
+
+        return $this;
+    }
+
+    /**
+     * Gets updated_at
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->container['updated_at'];
+    }
+
+    /**
+     * Sets updated_at
+     *
+     * @param \DateTime $updated_at updated_at
+     *
+     * @return $this
+     */
+    public function setUpdatedAt($updated_at)
+    {
+        $this->container['updated_at'] = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets user_id
+     *
+     * @return string
+     */
+    public function getUserId()
+    {
+        return $this->container['user_id'];
+    }
+
+    /**
+     * Sets user_id
+     *
+     * @param string $user_id user_id
+     *
+     * @return $this
+     */
+    public function setUserId($user_id)
+    {
+        $this->container['user_id'] = $user_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets verification_token
+     *
+     * @return string
+     */
+    public function getVerificationToken()
+    {
+        return $this->container['verification_token'];
+    }
+
+    /**
+     * Sets verification_token
+     *
+     * @param string $verification_token verification_token
+     *
+     * @return $this
+     */
+    public function setVerificationToken($verification_token)
+    {
+        $this->container['verification_token'] = $verification_token;
 
         return $this;
     }

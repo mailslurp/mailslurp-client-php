@@ -16,8 +16,6 @@ Method | HTTP request | Description
 
 Bulk create Inboxes (email addresses)
 
-Enterprise Plan Required
-
 ### Example
 
 ```php
@@ -79,8 +77,6 @@ Name | Type | Description  | Notes
 
 Bulk Delete Inboxes
 
-Enterprise Plan Required
-
 ### Example
 
 ```php
@@ -140,8 +136,6 @@ void (empty response body)
 > bulkSendEmails($bulk_send_email_options)
 
 Bulk Send Emails
-
-Enterprise Plan Required
 
 ### Example
 

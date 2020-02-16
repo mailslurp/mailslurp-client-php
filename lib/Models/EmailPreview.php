@@ -13,7 +13,7 @@
 /**
  * MailSlurp API
  *
- * ## Introduction  [MailSlurp](https://www.mailslurp.com) is an Email API for developers and QA testers. It let's users: - create emails addresses on demand - receive emails and attachments in code - send templated HTML emails  ## About  This page contains the REST API documentation for MailSlurp. All requests require API Key authentication passed as an `x-api-key` header.  Create an account to [get your free API Key](https://app.mailslurp.com/sign-up/).  ## Resources - 🔑 [Get API Key](https://app.mailslurp.com/sign-up/)                    - 🎓 [Developer Portal](https://www.mailslurp.com/docs/)           - 📦 [Library SDKs](https://www.mailslurp.com/docs/) - ✍️ [Code Examples](https://www.mailslurp.com/examples) - ⚠️ [Report an issue](https://drift.me/mailslurp)  ## Explore
+ * MailSlurp is an API for sending and receiving emails from dynamically allocated email addresses. It's designed for developers and QA teams to test applications, process inbound emails, send templated notifications, attachments, and more.   ## Overview  #### Inboxes  Inboxes have real email addresses that can send and receive emails. You can create inboxes with specific email addresses (using custom domains). You can also use randomly assigned MailSlurp addresses as unique, disposable test addresses.   See the InboxController or [inbox and email address guide](https://www.mailslurp.com/guides/) for more information.  #### Receive Emails You can receive emails in a number of ways. You can fetch emails and attachments directly from an inbox. Or you can use `waitFor` endpoints to hold a connection open until an email is received that matches given criteria (such as subject or body content). You can also use webhooks to have emails from multiple inboxes forwarded to your server via HTTP POST.  InboxController methods with `waitFor` in the name have a long timeout period and instruct MailSlurp to wait until an expected email is received. You can set conditions on email counts, subject or body matches, and more.  Most receive methods only return an email ID and not the full email (to keep response sizes low). To fetch the full body or attachments for an email use the email's ID with EmailController endpoints.  See the InboxController or [receiving emails guide](https://www.mailslurp.com/guides/) for more information.  #### Send Emails You can send templated HTML emails in several ways. You must first create an inbox to send an email. An inbox can have a specific address or a randomly assigned one. You can send emails from an inbox using `to`, `cc`, and `bcc` recipient lists or with contacts and contact groups.   Emails can contain plain-text or HTML bodies. You can also use email templates that support [moustache](https://mustache.github.io/) template variables. You can send attachments by first posting files to the AttachmentController and then using the returned IDs in the `attachments` field of the send options.  See the InboxController or [sending emails guide](https://www.mailslurp.com/guides/) for more information.  ## Templates MailSlurp emails support templates. You can create templates in the dashboard or API that contain [moustache](https://mustache.github.io/) style variables: for instance `Hello {{name}}`. Then when sending emails you can pass a map of variables names and values to be used. Additionally, when sending emails with contact groups you can use properties of the contact in your templates like `{{firstName}}` and `{{lastName}}``.  ## Explore
  *
  * The version of the OpenAPI document: 6.5.2
  * 
@@ -61,7 +61,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
         'attachments' => 'string[]',
         'bcc' => 'string[]',
         'cc' => 'string[]',
-        'created' => '\DateTime',
         'created_at' => '\DateTime',
         'id' => 'string',
         'read' => 'bool',
@@ -78,7 +77,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
         'attachments' => null,
         'bcc' => null,
         'cc' => null,
-        'created' => 'date-time',
         'created_at' => 'date-time',
         'id' => 'uuid',
         'read' => null,
@@ -116,7 +114,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
         'attachments' => 'attachments',
         'bcc' => 'bcc',
         'cc' => 'cc',
-        'created' => 'created',
         'created_at' => 'createdAt',
         'id' => 'id',
         'read' => 'read',
@@ -133,7 +130,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
         'attachments' => 'setAttachments',
         'bcc' => 'setBcc',
         'cc' => 'setCc',
-        'created' => 'setCreated',
         'created_at' => 'setCreatedAt',
         'id' => 'setId',
         'read' => 'setRead',
@@ -150,7 +146,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
         'attachments' => 'getAttachments',
         'bcc' => 'getBcc',
         'cc' => 'getCc',
-        'created' => 'getCreated',
         'created_at' => 'getCreatedAt',
         'id' => 'getId',
         'read' => 'getRead',
@@ -221,7 +216,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
         $this->container['attachments'] = isset($data['attachments']) ? $data['attachments'] : null;
         $this->container['bcc'] = isset($data['bcc']) ? $data['bcc'] : null;
         $this->container['cc'] = isset($data['cc']) ? $data['cc'] : null;
-        $this->container['created'] = isset($data['created']) ? $data['created'] : null;
         $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
         $this->container['id'] = isset($data['id']) ? $data['id'] : null;
         $this->container['read'] = isset($data['read']) ? $data['read'] : null;
@@ -238,15 +232,6 @@ class EmailPreview implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['created'] === null) {
-            $invalidProperties[] = "'created' can't be null";
-        }
-        if ($this->container['created_at'] === null) {
-            $invalidProperties[] = "'created_at' can't be null";
-        }
-        if ($this->container['to'] === null) {
-            $invalidProperties[] = "'to' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -275,7 +260,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
     /**
      * Sets attachments
      *
-     * @param string[]|null $attachments attachments
+     * @param string[]|null $attachments List of IDs of attachments found in the email. Use these IDs with the Inbox and Email Controllers to download attachments and attachment meta data such as filesize, name, extension.
      *
      * @return $this
      */
@@ -299,7 +284,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
     /**
      * Sets bcc
      *
-     * @param string[]|null $bcc bcc
+     * @param string[]|null $bcc List of `BCC` recipients email was addressed to
      *
      * @return $this
      */
@@ -323,7 +308,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
     /**
      * Sets cc
      *
-     * @param string[]|null $cc cc
+     * @param string[]|null $cc List of `CC` recipients email was addressed to
      *
      * @return $this
      */
@@ -335,33 +320,9 @@ class EmailPreview implements ModelInterface, ArrayAccess
     }
 
     /**
-     * Gets created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->container['created'];
-    }
-
-    /**
-     * Sets created
-     *
-     * @param \DateTime $created created
-     *
-     * @return $this
-     */
-    public function setCreated($created)
-    {
-        $this->container['created'] = $created;
-
-        return $this;
-    }
-
-    /**
      * Gets created_at
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getCreatedAt()
     {
@@ -371,7 +332,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
     /**
      * Sets created_at
      *
-     * @param \DateTime $created_at created_at
+     * @param \DateTime|null $created_at When was the email received by MailSlurp
      *
      * @return $this
      */
@@ -395,7 +356,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
     /**
      * Sets id
      *
-     * @param string|null $id ID of the Email.
+     * @param string|null $id ID of the email
      *
      * @return $this
      */
@@ -419,7 +380,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
     /**
      * Sets read
      *
-     * @param bool|null $read read
+     * @param bool|null $read Has the email been viewed ever
      *
      * @return $this
      */
@@ -443,7 +404,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
     /**
      * Sets subject
      *
-     * @param string|null $subject subject
+     * @param string|null $subject The subject line of the email message
      *
      * @return $this
      */
@@ -457,7 +418,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
     /**
      * Gets to
      *
-     * @return string[]
+     * @return string[]|null
      */
     public function getTo()
     {
@@ -467,7 +428,7 @@ class EmailPreview implements ModelInterface, ArrayAccess
     /**
      * Sets to
      *
-     * @param string[] $to to
+     * @param string[]|null $to List of `To` recipients email was addressed to
      *
      * @return $this
      */
