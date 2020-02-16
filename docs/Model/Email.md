@@ -1,6 +1,7 @@
-# Email
+# # Email
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **analysis** | [**\MailSlurp\Models\EmailAnalysis**](EmailAnalysis.md) |  | [optional] 
@@ -8,17 +9,20 @@ Name | Type | Description | Notes
 **bcc** | **string[]** |  | [optional] 
 **body** | **string** |  | [optional] 
 **cc** | **string[]** |  | [optional] 
+**charset** | **string** |  | [optional] 
 **created_at** | [**\DateTime**](\DateTime.md) |  | 
 **from** | **string** |  | [optional] 
 **headers** | **map[string,string]** |  | [optional] 
 **id** | **string** |  | 
 **inbox_id** | **string** |  | 
+**is_html** | **bool** |  | [optional] 
 **raw_url** | **string** |  | [optional] 
+**read** | **bool** | Has the email been viewed ever | [optional] 
 **subject** | **string** |  | [optional] 
 **to** | **string[]** |  | 
 **updated_at** | [**\DateTime**](\DateTime.md) |  | 
 **user_id** | **string** |  | 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 
