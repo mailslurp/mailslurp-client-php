@@ -6,14 +6,15 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createInbox**](InboxControllerApi.md#createInbox) | **POST** /inboxes | Create an Inbox (email address)
 [**deleteAllInboxes**](InboxControllerApi.md#deleteAllInboxes) | **DELETE** /inboxes | Delete all inboxes
-[**deleteInbox**](InboxControllerApi.md#deleteInbox) | **DELETE** /inboxes/{inboxId} | Delete Inbox / Email Address
+[**deleteInbox**](InboxControllerApi.md#deleteInbox) | **DELETE** /inboxes/{inboxId} | Delete inbox
 [**getAllInboxes**](InboxControllerApi.md#getAllInboxes) | **GET** /inboxes/paginated | List Inboxes Paginated
 [**getEmails**](InboxControllerApi.md#getEmails) | **GET** /inboxes/{inboxId}/emails | Get emails in an Inbox
-[**getInbox**](InboxControllerApi.md#getInbox) | **GET** /inboxes/{inboxId} | Get Inbox / EmailAddress
+[**getInbox**](InboxControllerApi.md#getInbox) | **GET** /inboxes/{inboxId} | Get Inbox
 [**getInboxEmailsPaginated**](InboxControllerApi.md#getInboxEmailsPaginated) | **GET** /inboxes/{inboxId}/emails/paginated | Get inbox emails paginated
 [**getInboxes**](InboxControllerApi.md#getInboxes) | **GET** /inboxes | List Inboxes / Email Addresses
 [**sendEmail**](InboxControllerApi.md#sendEmail) | **POST** /inboxes/{inboxId} | Send Email
 [**setInboxFavourited**](InboxControllerApi.md#setInboxFavourited) | **PUT** /inboxes/{inboxId}/favourite | Set inbox favourited state
+[**updateInbox**](InboxControllerApi.md#updateInbox) | **PATCH** /inboxes/{inboxId} | Update Inbox
 
 
 
@@ -23,7 +24,7 @@ Method | HTTP request | Description
 
 Create an Inbox (email address)
 
-Create a new inbox and with a ranmdomized email address to send and receive from. Pass emailAddress parameter if you wish to use a specific email address. Creating an inbox is required before sending or receiving emails. If writing tests it is recommended that you create a new inbox during each test method so that it is unique and empty.
+Create a new inbox and with a randomized email address to send and receive from. Pass emailAddress parameter if you wish to use a specific email address. Creating an inbox is required before sending or receiving emails. If writing tests it is recommended that you create a new inbox during each test method so that it is unique and empty.
 
 ### Example
 
@@ -96,7 +97,7 @@ Name | Type | Description  | Notes
 
 Delete all inboxes
 
-Permanently delete all inboxes and associated email addresses and all emails within the given inboxes
+Permanently delete all inboxes and associated email addresses. This will also delete all emails within the inboxes. Be careful as inboxes cannot be recovered once deleted. Note: deleting inboxes will not impact your usage limits. Monthly inbox creation limits are based on how many inboxes were created in the last 30 days, not how many inboxes you currently have.
 
 ### Example
 
@@ -152,9 +153,9 @@ void (empty response body)
 
 > deleteInbox($inbox_id)
 
-Delete Inbox / Email Address
+Delete inbox
 
-Permanently delete an inbox and associated email address and all emails within the given inboxes
+Permanently delete an inbox and associated email address aswell as all emails within the given inbox. This action cannot be undone. Note: deleting an inbox will not affect your account usage. Monthly inbox usage is based on how many inboxes you create within 30 days, not how many exist at time of request.
 
 ### Example
 
@@ -358,7 +359,7 @@ Name | Type | Description  | Notes
 
 > \MailSlurp\Models\Inbox getInbox($inbox_id)
 
-Get Inbox / EmailAddress
+Get Inbox
 
 Returns an inbox's properties, including its email address and ID.
 
@@ -551,7 +552,7 @@ This endpoint does not need any parameter.
 
 Send Email
 
-Send an email from the inbox's email address. Specify the email recipients and contents in the request body. See the `SendEmailOptions` for more information. Note the `inboxId` refers to the inbox's id NOT its email address
+Send an email from an inbox's email address.  The request body should contain the `SendEmailOptions` that include recipients, attachments, body etc. See `SendEmailOptions` for all available properties. Note the `inboxId` refers to the inbox's id not the inbox's email address. See https://www.mailslurp.com/guides/ for more information on how to send emails.
 
 ### Example
 
@@ -655,6 +656,71 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **inbox_id** | [**string**](../Model/.md)| inboxId |
  **set_inbox_favourited_options** | [**\MailSlurp\Models\SetInboxFavouritedOptions**](../Model/SetInboxFavouritedOptions.md)| setInboxFavouritedOptions |
+
+### Return type
+
+[**\MailSlurp\Models\Inbox**](../Model/Inbox.md)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
+
+
+## updateInbox
+
+> \MailSlurp\Models\Inbox updateInbox($inbox_id, $update_inbox_options)
+
+Update Inbox
+
+Update editable fields on an inbox
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\InboxControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$inbox_id = 'inbox_id_example'; // string | inboxId
+$update_inbox_options = new \MailSlurp\Models\UpdateInboxOptions(); // \MailSlurp\Models\UpdateInboxOptions | updateInboxOptions
+
+try {
+    $result = $apiInstance->updateInbox($inbox_id, $update_inbox_options);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling InboxControllerApi->updateInbox: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **inbox_id** | [**string**](../Model/.md)| inboxId |
+ **update_inbox_options** | [**\MailSlurp\Models\UpdateInboxOptions**](../Model/UpdateInboxOptions.md)| updateInboxOptions |
 
 ### Return type
 
