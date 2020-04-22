@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**getEmails**](InboxControllerApi.md#getEmails) | **GET** /inboxes/{inboxId}/emails | Get emails in an Inbox
 [**getInbox**](InboxControllerApi.md#getInbox) | **GET** /inboxes/{inboxId} | Get Inbox
 [**getInboxEmailsPaginated**](InboxControllerApi.md#getInboxEmailsPaginated) | **GET** /inboxes/{inboxId}/emails/paginated | Get inbox emails paginated
+[**getInboxTags**](InboxControllerApi.md#getInboxTags) | **GET** /inboxes/tags | Get inbox tags
 [**getInboxes**](InboxControllerApi.md#getInboxes) | **GET** /inboxes | List Inboxes / Email Addresses
 [**sendEmail**](InboxControllerApi.md#sendEmail) | **POST** /inboxes/{inboxId} | Send Email
 [**setInboxFavourited**](InboxControllerApi.md#setInboxFavourited) | **PUT** /inboxes/{inboxId}/favourite | Set inbox favourited state
@@ -213,7 +214,7 @@ void (empty response body)
 
 ## getAllInboxes
 
-> \MailSlurp\Models\PageInboxProjection getAllInboxes($favourite, $page, $search, $size, $sort)
+> \MailSlurp\Models\PageInboxProjection getAllInboxes($favourite, $page, $search, $size, $sort, $tag)
 
 List Inboxes Paginated
 
@@ -243,9 +244,10 @@ $page = 0; // int | Optional page index in inbox list pagination
 $search = 'search_example'; // string | Optionally filter by search words partial matching ID, tags, name, and email address
 $size = 20; // int | Optional page size in inbox list pagination
 $sort = 'ASC'; // string | Optional createdAt sort direction ASC or DESC
+$tag = 'tag_example'; // string | Optionally filter by tags
 
 try {
-    $result = $apiInstance->getAllInboxes($favourite, $page, $search, $size, $sort);
+    $result = $apiInstance->getAllInboxes($favourite, $page, $search, $size, $sort, $tag);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling InboxControllerApi->getAllInboxes: ', $e->getMessage(), PHP_EOL;
@@ -263,6 +265,7 @@ Name | Type | Description  | Notes
  **search** | **string**| Optionally filter by search words partial matching ID, tags, name, and email address | [optional]
  **size** | **int**| Optional page size in inbox list pagination | [optional] [default to 20]
  **sort** | **string**| Optional createdAt sort direction ASC or DESC | [optional] [default to &#39;ASC&#39;]
+ **tag** | **string**| Optionally filter by tags | [optional]
 
 ### Return type
 
@@ -472,6 +475,65 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**\MailSlurp\Models\PageEmailPreview**](../Model/PageEmailPreview.md)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
+
+
+## getInboxTags
+
+> string[] getInboxTags()
+
+Get inbox tags
+
+Get all inbox tags
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\InboxControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+
+try {
+    $result = $apiInstance->getInboxTags();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling InboxControllerApi->getInboxTags: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+**string[]**
 
 ### Authorization
 

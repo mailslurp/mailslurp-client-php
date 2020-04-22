@@ -74,7 +74,7 @@ Name | Type | Description  | Notes
 
 ## uploadMultipartForm
 
-> string[] uploadMultipartForm($file, $content_type, $filename)
+> string[] uploadMultipartForm($file, $content_type, $filename, $x_filename)
 
 Upload an attachment for sending using Multipart Form
 
@@ -102,9 +102,10 @@ $apiInstance = new MailSlurp\Api\AttachmentControllerApi(
 $file = "/path/to/file.txt"; // \SplFileObject | file
 $content_type = 'content_type_example'; // string | contentType
 $filename = 'filename_example'; // string | filename
+$x_filename = 'x_filename_example'; // string | x-filename
 
 try {
-    $result = $apiInstance->uploadMultipartForm($file, $content_type, $filename);
+    $result = $apiInstance->uploadMultipartForm($file, $content_type, $filename, $x_filename);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AttachmentControllerApi->uploadMultipartForm: ', $e->getMessage(), PHP_EOL;
@@ -120,6 +121,7 @@ Name | Type | Description  | Notes
  **file** | **\SplFileObject****\SplFileObject**| file |
  **content_type** | **string**| contentType | [optional]
  **filename** | **string**| filename | [optional]
+ **x_filename** | **string**| x-filename | [optional]
 
 ### Return type
 

@@ -150,7 +150,7 @@ Name | Type | Description  | Notes
 
 Fetch inbox's latest email or if empty wait for an email to arrive
 
-Will return either the last received email or wait for an email to arrive and return that. If you need to wait for an email for a non-empty inbox see the other receive methods such as waitForNthEmail or waitForEmailCount.
+Will return either the last received email or wait for an email to arrive and return that. If you need to wait for an email for a non-empty inbox set `unreadOnly=true` or see the other receive methods such as `waitForNthEmail` or `waitForEmailCount`.
 
 ### Example
 
@@ -173,7 +173,7 @@ $apiInstance = new MailSlurp\Api\WaitForControllerApi(
 );
 $inbox_id = 'inbox_id_example'; // string | Id of the inbox we are fetching emails from
 $timeout = 56; // int | Max milliseconds to wait
-$unread_only = false; // bool | Optional filter for unread only
+$unread_only = false; // bool | Optional filter for unread only.
 
 try {
     $result = $apiInstance->waitForLatestEmail($inbox_id, $timeout, $unread_only);
@@ -191,7 +191,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **inbox_id** | [**string**](../Model/.md)| Id of the inbox we are fetching emails from | [optional]
  **timeout** | **int**| Max milliseconds to wait | [optional]
- **unread_only** | **bool**| Optional filter for unread only | [optional] [default to false]
+ **unread_only** | **bool**| Optional filter for unread only. | [optional] [default to false]
 
 ### Return type
 
