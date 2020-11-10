@@ -1,0 +1,575 @@
+# MailSlurp\GroupControllerApi
+
+All URIs are relative to *https://api.mailslurp.com*
+
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**addContactsToGroup**](GroupControllerApi.md#addContactsToGroup) | **PUT** /groups/{groupId}/contacts | Add contacts to a group
+[**createGroup**](GroupControllerApi.md#createGroup) | **POST** /groups | Create a group
+[**deleteGroup**](GroupControllerApi.md#deleteGroup) | **DELETE** /groups/{groupId} | Delete group
+[**getAllGroups**](GroupControllerApi.md#getAllGroups) | **GET** /groups/paginated | Get all Contact Groups in paginated format
+[**getGroup**](GroupControllerApi.md#getGroup) | **GET** /groups/{groupId} | Get group
+[**getGroupWithContacts**](GroupControllerApi.md#getGroupWithContacts) | **GET** /groups/{groupId}/contacts | Get group and contacts belonging to it
+[**getGroupWithContactsPaginated**](GroupControllerApi.md#getGroupWithContactsPaginated) | **GET** /groups/{groupId}/contacts-paginated | Get group and paginated contacts belonging to it
+[**getGroups**](GroupControllerApi.md#getGroups) | **GET** /groups | Get all groups
+[**removeContactsFromGroup**](GroupControllerApi.md#removeContactsFromGroup) | **DELETE** /groups/{groupId}/contacts | Remove contacts from a group
+
+
+
+## addContactsToGroup
+
+> \MailSlurp\Models\GroupContactsDto addContactsToGroup($group_id, $update_group_contacts_option)
+
+Add contacts to a group
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\GroupControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$group_id = 'group_id_example'; // string | groupId
+$update_group_contacts_option = new \MailSlurp\Models\UpdateGroupContacts(); // \MailSlurp\Models\UpdateGroupContacts | updateGroupContactsOption
+
+try {
+    $result = $apiInstance->addContactsToGroup($group_id, $update_group_contacts_option);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling GroupControllerApi->addContactsToGroup: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **group_id** | [**string**](../Model/.md)| groupId |
+ **update_group_contacts_option** | [**\MailSlurp\Models\UpdateGroupContacts**](../Model/UpdateGroupContacts.md)| updateGroupContactsOption |
+
+### Return type
+
+[**\MailSlurp\Models\GroupContactsDto**](../Model/GroupContactsDto.md)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
+
+
+## createGroup
+
+> \MailSlurp\Models\GroupDto createGroup($create_group_options)
+
+Create a group
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\GroupControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$create_group_options = new \MailSlurp\Models\CreateGroupOptions(); // \MailSlurp\Models\CreateGroupOptions | createGroupOptions
+
+try {
+    $result = $apiInstance->createGroup($create_group_options);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling GroupControllerApi->createGroup: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **create_group_options** | [**\MailSlurp\Models\CreateGroupOptions**](../Model/CreateGroupOptions.md)| createGroupOptions |
+
+### Return type
+
+[**\MailSlurp\Models\GroupDto**](../Model/GroupDto.md)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
+
+
+## deleteGroup
+
+> deleteGroup($group_id)
+
+Delete group
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\GroupControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$group_id = 'group_id_example'; // string | groupId
+
+try {
+    $apiInstance->deleteGroup($group_id);
+} catch (Exception $e) {
+    echo 'Exception when calling GroupControllerApi->deleteGroup: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **group_id** | [**string**](../Model/.md)| groupId |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
+
+
+## getAllGroups
+
+> \MailSlurp\Models\PageGroupProjection getAllGroups($page, $size, $sort)
+
+Get all Contact Groups in paginated format
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\GroupControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$page = 0; // int | Optional page index in inbox list pagination
+$size = 20; // int | Optional page size in inbox list pagination
+$sort = 'ASC'; // string | Optional createdAt sort direction ASC or DESC
+
+try {
+    $result = $apiInstance->getAllGroups($page, $size, $sort);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling GroupControllerApi->getAllGroups: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **page** | **int**| Optional page index in inbox list pagination | [optional] [default to 0]
+ **size** | **int**| Optional page size in inbox list pagination | [optional] [default to 20]
+ **sort** | **string**| Optional createdAt sort direction ASC or DESC | [optional] [default to &#39;ASC&#39;]
+
+### Return type
+
+[**\MailSlurp\Models\PageGroupProjection**](../Model/PageGroupProjection.md)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
+
+
+## getGroup
+
+> \MailSlurp\Models\GroupDto getGroup($group_id)
+
+Get group
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\GroupControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$group_id = 'group_id_example'; // string | groupId
+
+try {
+    $result = $apiInstance->getGroup($group_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling GroupControllerApi->getGroup: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **group_id** | [**string**](../Model/.md)| groupId |
+
+### Return type
+
+[**\MailSlurp\Models\GroupDto**](../Model/GroupDto.md)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
+
+
+## getGroupWithContacts
+
+> \MailSlurp\Models\GroupContactsDto getGroupWithContacts($group_id)
+
+Get group and contacts belonging to it
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\GroupControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$group_id = 'group_id_example'; // string | groupId
+
+try {
+    $result = $apiInstance->getGroupWithContacts($group_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling GroupControllerApi->getGroupWithContacts: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **group_id** | [**string**](../Model/.md)| groupId |
+
+### Return type
+
+[**\MailSlurp\Models\GroupContactsDto**](../Model/GroupContactsDto.md)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
+
+
+## getGroupWithContactsPaginated
+
+> \MailSlurp\Models\PageContactProjection getGroupWithContactsPaginated($group_id, $page, $size, $sort)
+
+Get group and paginated contacts belonging to it
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\GroupControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$group_id = 'group_id_example'; // string | groupId
+$page = 0; // int | Optional page index in group contact pagination
+$size = 20; // int | Optional page size in group contact pagination
+$sort = 'ASC'; // string | Optional createdAt sort direction ASC or DESC
+
+try {
+    $result = $apiInstance->getGroupWithContactsPaginated($group_id, $page, $size, $sort);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling GroupControllerApi->getGroupWithContactsPaginated: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **group_id** | [**string**](../Model/.md)| groupId |
+ **page** | **int**| Optional page index in group contact pagination | [optional] [default to 0]
+ **size** | **int**| Optional page size in group contact pagination | [optional] [default to 20]
+ **sort** | **string**| Optional createdAt sort direction ASC or DESC | [optional] [default to &#39;ASC&#39;]
+
+### Return type
+
+[**\MailSlurp\Models\PageContactProjection**](../Model/PageContactProjection.md)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
+
+
+## getGroups
+
+> \MailSlurp\Models\GroupProjection[] getGroups()
+
+Get all groups
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\GroupControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+
+try {
+    $result = $apiInstance->getGroups();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling GroupControllerApi->getGroups: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**\MailSlurp\Models\GroupProjection[]**](../Model/GroupProjection.md)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
+
+
+## removeContactsFromGroup
+
+> \MailSlurp\Models\GroupContactsDto removeContactsFromGroup($group_id, $update_group_contacts_option)
+
+Remove contacts from a group
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\GroupControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$group_id = 'group_id_example'; // string | groupId
+$update_group_contacts_option = new \MailSlurp\Models\UpdateGroupContacts(); // \MailSlurp\Models\UpdateGroupContacts | updateGroupContactsOption
+
+try {
+    $result = $apiInstance->removeContactsFromGroup($group_id, $update_group_contacts_option);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling GroupControllerApi->removeContactsFromGroup: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **group_id** | [**string**](../Model/.md)| groupId |
+ **update_group_contacts_option** | [**\MailSlurp\Models\UpdateGroupContacts**](../Model/UpdateGroupContacts.md)| updateGroupContactsOption |
+
+### Return type
+
+[**\MailSlurp\Models\GroupContactsDto**](../Model/GroupContactsDto.md)
+
+### Authorization
+
+[API_KEY](../../README.md#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
+
