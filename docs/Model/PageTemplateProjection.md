@@ -1,0 +1,21 @@
+# # PageTemplateProjection
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**content** | [**\MailSlurp\Models\TemplateProjection[]**](TemplateProjection.md) |  | [optional] 
+**empty** | **bool** |  | [optional] 
+**first** | **bool** |  | [optional] 
+**last** | **bool** |  | [optional] 
+**number** | **int** |  | [optional] 
+**number_of_elements** | **int** |  | [optional] 
+**pageable** | [**\MailSlurp\Models\Pageable**](Pageable.md) |  | [optional] 
+**size** | **int** |  | [optional] 
+**sort** | [**\MailSlurp\Models\Sort**](Sort.md) |  | [optional] 
+**total_elements** | **int** |  | [optional] 
+**total_pages** | **int** |  | [optional] 
+
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+
+
