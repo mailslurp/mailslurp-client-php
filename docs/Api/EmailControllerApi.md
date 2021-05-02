@@ -1,0 +1,1381 @@
+# MailSlurp\EmailControllerApi
+
+All URIs are relative to *https://api.mailslurp.com*
+
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**deleteAllEmails**](EmailControllerApi#deleteAllEmails) | **DELETE** /emails | Delete all emails
+[**deleteEmail**](EmailControllerApi#deleteEmail) | **DELETE** /emails/{emailId} | Delete an email
+[**downloadAttachment**](EmailControllerApi#downloadAttachment) | **GET** /emails/{emailId}/attachments/{attachmentId} | Get email attachment bytes. If you have trouble with byte responses try the &#x60;downloadAttachmentBase64&#x60; response endpoints.
+[**downloadAttachmentBase64**](EmailControllerApi#downloadAttachmentBase64) | **GET** /emails/{emailId}/attachments/{attachmentId}/base64 | Get email attachment as base64 encoded string (alternative to binary responses)
+[**forwardEmail**](EmailControllerApi#forwardEmail) | **POST** /emails/{emailId}/forward | Forward email
+[**getAttachmentMetaData**](EmailControllerApi#getAttachmentMetaData) | **GET** /emails/{emailId}/attachments/{attachmentId}/metadata | Get email attachment metadata
+[**getAttachments**](EmailControllerApi#getAttachments) | **GET** /emails/{emailId}/attachments | Get all email attachment metadata
+[**getEmail**](EmailControllerApi#getEmail) | **GET** /emails/{emailId} | Get email content
+[**getEmailContentMatch**](EmailControllerApi#getEmailContentMatch) | **POST** /emails/{emailId}/contentMatch | Get email content regex pattern match results. Runs regex against email body and returns match groups.
+[**getEmailHTML**](EmailControllerApi#getEmailHTML) | **GET** /emails/{emailId}/html | Get email content as HTML
+[**getEmailHTMLQuery**](EmailControllerApi#getEmailHTMLQuery) | **GET** /emails/{emailId}/htmlQuery | Parse and return text from an email, stripping HTML and decoding encoded characters
+[**getEmailTextLines**](EmailControllerApi#getEmailTextLines) | **GET** /emails/{emailId}/textLines | Parse and return text from an email, stripping HTML and decoding encoded characters
+[**getEmailsPaginated**](EmailControllerApi#getEmailsPaginated) | **GET** /emails | Get all emails in all inboxes. Email API list all.
+[**getLatestEmail**](EmailControllerApi#getLatestEmail) | **GET** /emails/latest | Get latest email
+[**getLatestEmailInInbox**](EmailControllerApi#getLatestEmailInInbox) | **GET** /emails/latestIn | Get latest email
+[**getOrganizationEmailsPaginated**](EmailControllerApi#getOrganizationEmailsPaginated) | **GET** /emails/organization | Get all organization emails. List team or shared test email accounts
+[**getRawEmailContents**](EmailControllerApi#getRawEmailContents) | **GET** /emails/{emailId}/raw | Get raw email string
+[**getRawEmailJson**](EmailControllerApi#getRawEmailJson) | **GET** /emails/{emailId}/raw/json | Get raw email in JSON
+[**getUnreadEmailCount**](EmailControllerApi#getUnreadEmailCount) | **GET** /emails/unreadCount | Get unread email count
+[**replyToEmail**](EmailControllerApi#replyToEmail) | **PUT** /emails/{emailId} | Reply to an email
+[**validateEmail**](EmailControllerApi#validateEmail) | **POST** /emails/{emailId}/validate | Validate email
+
+
+
+## deleteAllEmails
+
+> deleteAllEmails()
+
+Delete all emails
+
+Deletes all emails in your account. Be careful as emails cannot be recovered
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+
+try {
+    $apiInstance->deleteAllEmails();
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->deleteAllEmails: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## deleteEmail
+
+> deleteEmail($email_id)
+
+Delete an email
+
+Deletes an email and removes it from the inbox. Deleted emails cannot be recovered.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email_id = 'email_id_example'; // string | ID of email to delete
+
+try {
+    $apiInstance->deleteEmail($email_id);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->deleteEmail: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_id** | [**string**](../Model/)| ID of email to delete |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## downloadAttachment
+
+> string downloadAttachment($attachment_id, $email_id, $api_key)
+
+Get email attachment bytes. If you have trouble with byte responses try the `downloadAttachmentBase64` response endpoints.
+
+Returns the specified attachment for a given email as a stream / array of bytes. You can find attachment ids in email responses endpoint responses. The response type is application/octet-stream.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$attachment_id = 'attachment_id_example'; // string | ID of attachment
+$email_id = 'email_id_example'; // string | ID of email
+$api_key = 'api_key_example'; // string | Can pass apiKey in url for this request if you wish to download the file in a browser. Content type will be set to original content type of the attachment file. This is so that browsers can download the file correctly.
+
+try {
+    $result = $apiInstance->downloadAttachment($attachment_id, $email_id, $api_key);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->downloadAttachment: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **attachment_id** | **string**| ID of attachment |
+ **email_id** | [**string**](../Model/)| ID of email |
+ **api_key** | **string**| Can pass apiKey in url for this request if you wish to download the file in a browser. Content type will be set to original content type of the attachment file. This is so that browsers can download the file correctly. | [optional]
+
+### Return type
+
+**string**
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/octet-stream
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## downloadAttachmentBase64
+
+> \MailSlurp\Models\DownloadAttachmentDto downloadAttachmentBase64($attachment_id, $email_id)
+
+Get email attachment as base64 encoded string (alternative to binary responses)
+
+Returns the specified attachment for a given email as a base 64 encoded string. The response type is application/json. This method is similar to the `downloadAttachment` method but allows some clients to get around issues with binary responses.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$attachment_id = 'attachment_id_example'; // string | ID of attachment
+$email_id = 'email_id_example'; // string | ID of email
+
+try {
+    $result = $apiInstance->downloadAttachmentBase64($attachment_id, $email_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->downloadAttachmentBase64: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **attachment_id** | **string**| ID of attachment |
+ **email_id** | [**string**](../Model/)| ID of email |
+
+### Return type
+
+[**\MailSlurp\Models\DownloadAttachmentDto**](../Model/DownloadAttachmentDto)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## forwardEmail
+
+> forwardEmail($email_id, $forward_email_options)
+
+Forward email
+
+Forward an existing email to new recipients.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email_id = 'email_id_example'; // string | ID of email
+$forward_email_options = new \MailSlurp\Models\ForwardEmailOptions(); // \MailSlurp\Models\ForwardEmailOptions | forwardEmailOptions
+
+try {
+    $apiInstance->forwardEmail($email_id, $forward_email_options);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->forwardEmail: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_id** | [**string**](../Model/)| ID of email |
+ **forward_email_options** | [**\MailSlurp\Models\ForwardEmailOptions**](../Model/ForwardEmailOptions)| forwardEmailOptions |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## getAttachmentMetaData
+
+> \MailSlurp\Models\AttachmentMetaData getAttachmentMetaData($attachment_id, $email_id)
+
+Get email attachment metadata
+
+Returns the metadata such as name and content-type for a given attachment and email.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$attachment_id = 'attachment_id_example'; // string | ID of attachment
+$email_id = 'email_id_example'; // string | ID of email
+
+try {
+    $result = $apiInstance->getAttachmentMetaData($attachment_id, $email_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->getAttachmentMetaData: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **attachment_id** | **string**| ID of attachment |
+ **email_id** | [**string**](../Model/)| ID of email |
+
+### Return type
+
+[**\MailSlurp\Models\AttachmentMetaData**](../Model/AttachmentMetaData)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## getAttachments
+
+> \MailSlurp\Models\AttachmentMetaData[] getAttachments($email_id)
+
+Get all email attachment metadata
+
+Returns an array of attachment metadata such as name and content-type for a given email if present.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email_id = 'email_id_example'; // string | ID of email
+
+try {
+    $result = $apiInstance->getAttachments($email_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->getAttachments: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_id** | [**string**](../Model/)| ID of email |
+
+### Return type
+
+[**\MailSlurp\Models\AttachmentMetaData[]**](../Model/AttachmentMetaData)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## getEmail
+
+> \MailSlurp\Models\Email getEmail($email_id, $decode)
+
+Get email content
+
+Returns a email summary object with headers and content. To retrieve the raw unparsed email use the getRawEmail endpoints
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email_id = 'email_id_example'; // string | emailId
+$decode = false; // bool | Decode email body quoted-printable encoding to plain text. SMTP servers often encode text using quoted-printable format (for instance `=D7`). This can be a pain for testing
+
+try {
+    $result = $apiInstance->getEmail($email_id, $decode);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->getEmail: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_id** | [**string**](../Model/)| emailId |
+ **decode** | **bool**| Decode email body quoted-printable encoding to plain text. SMTP servers often encode text using quoted-printable format (for instance &#x60;&#x3D;D7&#x60;). This can be a pain for testing | [optional] [default to false]
+
+### Return type
+
+[**\MailSlurp\Models\Email**](../Model/Email)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## getEmailContentMatch
+
+> \MailSlurp\Models\EmailContentMatchResult getEmailContentMatch($email_id, $content_match_options)
+
+Get email content regex pattern match results. Runs regex against email body and returns match groups.
+
+Return the matches for a given Java style regex pattern. Do not include the typical `/` at start or end of regex in some languages. Given an example `your code is: 12345` the pattern to extract match looks like `code is: (\\d{6})`. This will return an array of matches with the first matching the entire pattern and the subsequent matching the groups: `['code is: 123456', '123456']` See https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html for more information of available patterns.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email_id = 'email_id_example'; // string | ID of email to match against
+$content_match_options = new \MailSlurp\Models\ContentMatchOptions(); // \MailSlurp\Models\ContentMatchOptions | contentMatchOptions
+
+try {
+    $result = $apiInstance->getEmailContentMatch($email_id, $content_match_options);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->getEmailContentMatch: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_id** | [**string**](../Model/)| ID of email to match against |
+ **content_match_options** | [**\MailSlurp\Models\ContentMatchOptions**](../Model/ContentMatchOptions)| contentMatchOptions |
+
+### Return type
+
+[**\MailSlurp\Models\EmailContentMatchResult**](../Model/EmailContentMatchResult)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## getEmailHTML
+
+> string getEmailHTML($email_id, $decode)
+
+Get email content as HTML
+
+Retrieve email content as HTML response for viewing in browsers. Decodes quoted-printable entities and converts charset to UTF-8. Pass your API KEY as a request parameter when viewing in a browser: `?apiKey=xxx`
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email_id = 'email_id_example'; // string | emailId
+$decode = false; // bool | decode
+
+try {
+    $result = $apiInstance->getEmailHTML($email_id, $decode);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->getEmailHTML: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_id** | [**string**](../Model/)| emailId |
+ **decode** | **bool**| decode | [optional] [default to false]
+
+### Return type
+
+**string**
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/html
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## getEmailHTMLQuery
+
+> \MailSlurp\Models\EmailTextLinesResult getEmailHTMLQuery($email_id, $html_selector)
+
+Parse and return text from an email, stripping HTML and decoding encoded characters
+
+Parse an email body and return the content as an array of text. HTML parsing uses JSoup which supports JQuery/CSS style selectors
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email_id = 'email_id_example'; // string | ID of email to perform HTML query on
+$html_selector = 'html_selector_example'; // string | HTML selector to search for. Uses JQuery/JSoup/CSS style selector like '.my-div' to match content. See https://jsoup.org/apidocs/org/jsoup/select/Selector.html for more information.
+
+try {
+    $result = $apiInstance->getEmailHTMLQuery($email_id, $html_selector);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->getEmailHTMLQuery: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_id** | [**string**](../Model/)| ID of email to perform HTML query on |
+ **html_selector** | **string**| HTML selector to search for. Uses JQuery/JSoup/CSS style selector like &#39;.my-div&#39; to match content. See https://jsoup.org/apidocs/org/jsoup/select/Selector.html for more information. | [optional]
+
+### Return type
+
+[**\MailSlurp\Models\EmailTextLinesResult**](../Model/EmailTextLinesResult)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## getEmailTextLines
+
+> \MailSlurp\Models\EmailTextLinesResult getEmailTextLines($email_id, $decode_html_entities, $line_separator)
+
+Parse and return text from an email, stripping HTML and decoding encoded characters
+
+Parse an email body and return the content as an array of strings. HTML parsing uses JSoup and UNIX line separators.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email_id = 'email_id_example'; // string | ID of email to fetch text for
+$decode_html_entities = True; // bool | Decode HTML entities
+$line_separator = 'line_separator_example'; // string | Line separator character
+
+try {
+    $result = $apiInstance->getEmailTextLines($email_id, $decode_html_entities, $line_separator);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->getEmailTextLines: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_id** | [**string**](../Model/)| ID of email to fetch text for |
+ **decode_html_entities** | **bool**| Decode HTML entities | [optional]
+ **line_separator** | **string**| Line separator character | [optional]
+
+### Return type
+
+[**\MailSlurp\Models\EmailTextLinesResult**](../Model/EmailTextLinesResult)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## getEmailsPaginated
+
+> \MailSlurp\Models\PageEmailProjection getEmailsPaginated($inbox_id, $page, $size, $sort, $unread_only)
+
+Get all emails in all inboxes. Email API list all.
+
+By default returns all emails across all inboxes sorted by ascending created at date. Responses are paginated. You can restrict results to a list of inbox IDs. You can also filter out read messages
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$inbox_id = array('inbox_id_example'); // string[] | Optional inbox ids to filter by. Can be repeated. By default will use all inboxes belonging to your account.
+$page = 0; // int | Optional page index in email list pagination
+$size = 20; // int | Optional page size in email list pagination. Maximum size is 100. Use page index and sort to page through larger results
+$sort = 'ASC'; // string | Optional createdAt sort direction ASC or DESC
+$unread_only = false; // bool | Optional filter for unread emails only. All emails are considered unread until they are viewed in the dashboard or requested directly
+
+try {
+    $result = $apiInstance->getEmailsPaginated($inbox_id, $page, $size, $sort, $unread_only);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->getEmailsPaginated: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **inbox_id** | [**string[]**](../Model/string)| Optional inbox ids to filter by. Can be repeated. By default will use all inboxes belonging to your account. | [optional]
+ **page** | **int**| Optional page index in email list pagination | [optional] [default to 0]
+ **size** | **int**| Optional page size in email list pagination. Maximum size is 100. Use page index and sort to page through larger results | [optional] [default to 20]
+ **sort** | **string**| Optional createdAt sort direction ASC or DESC | [optional] [default to &#39;ASC&#39;]
+ **unread_only** | **bool**| Optional filter for unread emails only. All emails are considered unread until they are viewed in the dashboard or requested directly | [optional] [default to false]
+
+### Return type
+
+[**\MailSlurp\Models\PageEmailProjection**](../Model/PageEmailProjection)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## getLatestEmail
+
+> \MailSlurp\Models\Email getLatestEmail($inbox_ids)
+
+Get latest email
+
+Get the newest email in all inboxes or in a passed set of inbox IDs
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$inbox_ids = array('inbox_ids_example'); // string[] | Optional set of inboxes to filter by. Only get the latest email from these inbox IDs
+
+try {
+    $result = $apiInstance->getLatestEmail($inbox_ids);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->getLatestEmail: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **inbox_ids** | [**string[]**](../Model/string)| Optional set of inboxes to filter by. Only get the latest email from these inbox IDs | [optional]
+
+### Return type
+
+[**\MailSlurp\Models\Email**](../Model/Email)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## getLatestEmailInInbox
+
+> \MailSlurp\Models\Email getLatestEmailInInbox($inbox_id)
+
+Get latest email
+
+Get the newest email in all inboxes or in a passed set of inbox IDs
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$inbox_id = 'inbox_id_example'; // string | ID of the inbox you want to get the latest email from
+
+try {
+    $result = $apiInstance->getLatestEmailInInbox($inbox_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->getLatestEmailInInbox: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **inbox_id** | [**string**](../Model/)| ID of the inbox you want to get the latest email from | [optional]
+
+### Return type
+
+[**\MailSlurp\Models\Email**](../Model/Email)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## getOrganizationEmailsPaginated
+
+> \MailSlurp\Models\PageEmailProjection getOrganizationEmailsPaginated($inbox_id, $page, $size, $sort, $unread_only)
+
+Get all organization emails. List team or shared test email accounts
+
+By default returns all emails across all team inboxes sorted by ascending created at date. Responses are paginated. You can restrict results to a list of inbox IDs. You can also filter out read messages
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$inbox_id = array('inbox_id_example'); // string[] | Optional inbox ids to filter by. Can be repeated. By default will use all inboxes belonging to your account.
+$page = 0; // int | Optional page index in email list pagination
+$size = 20; // int | Optional page size in email list pagination. Maximum size is 100. Use page index and sort to page through larger results
+$sort = 'ASC'; // string | Optional createdAt sort direction ASC or DESC
+$unread_only = false; // bool | Optional filter for unread emails only. All emails are considered unread until they are viewed in the dashboard or requested directly
+
+try {
+    $result = $apiInstance->getOrganizationEmailsPaginated($inbox_id, $page, $size, $sort, $unread_only);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->getOrganizationEmailsPaginated: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **inbox_id** | [**string[]**](../Model/string)| Optional inbox ids to filter by. Can be repeated. By default will use all inboxes belonging to your account. | [optional]
+ **page** | **int**| Optional page index in email list pagination | [optional] [default to 0]
+ **size** | **int**| Optional page size in email list pagination. Maximum size is 100. Use page index and sort to page through larger results | [optional] [default to 20]
+ **sort** | **string**| Optional createdAt sort direction ASC or DESC | [optional] [default to &#39;ASC&#39;]
+ **unread_only** | **bool**| Optional filter for unread emails only. All emails are considered unread until they are viewed in the dashboard or requested directly | [optional] [default to false]
+
+### Return type
+
+[**\MailSlurp\Models\PageEmailProjection**](../Model/PageEmailProjection)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## getRawEmailContents
+
+> string getRawEmailContents($email_id)
+
+Get raw email string
+
+Returns a raw, unparsed, and unprocessed email. If your client has issues processing the response it is likely due to the response content-type which is text/plain. If you need a JSON response content-type use the getRawEmailJson endpoint
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email_id = 'email_id_example'; // string | ID of email
+
+try {
+    $result = $apiInstance->getRawEmailContents($email_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->getRawEmailContents: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_id** | [**string**](../Model/)| ID of email |
+
+### Return type
+
+**string**
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/plain
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## getRawEmailJson
+
+> \MailSlurp\Models\RawEmailJson getRawEmailJson($email_id)
+
+Get raw email in JSON
+
+Returns a raw, unparsed, and unprocessed email wrapped in a JSON response object for easier handling when compared with the getRawEmail text/plain response
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email_id = 'email_id_example'; // string | ID of email
+
+try {
+    $result = $apiInstance->getRawEmailJson($email_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->getRawEmailJson: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_id** | [**string**](../Model/)| ID of email |
+
+### Return type
+
+[**\MailSlurp\Models\RawEmailJson**](../Model/RawEmailJson)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## getUnreadEmailCount
+
+> \MailSlurp\Models\UnreadCount getUnreadEmailCount()
+
+Get unread email count
+
+Get number of emails unread. Unread means has not been viewed in dashboard or returned in an email API response
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+
+try {
+    $result = $apiInstance->getUnreadEmailCount();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->getUnreadEmailCount: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**\MailSlurp\Models\UnreadCount**](../Model/UnreadCount)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## replyToEmail
+
+> \MailSlurp\Models\SentEmailDto replyToEmail($email_id, $reply_to_email_options)
+
+Reply to an email
+
+Send the reply to the email sender or reply-to and include same subject cc bcc etc. Reply to an email and the contents will be sent with the existing subject to the emails `to`, `cc`, and `bcc`.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email_id = 'email_id_example'; // string | ID of the email that should be replied to
+$reply_to_email_options = new \MailSlurp\Models\ReplyToEmailOptions(); // \MailSlurp\Models\ReplyToEmailOptions | replyToEmailOptions
+
+try {
+    $result = $apiInstance->replyToEmail($email_id, $reply_to_email_options);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->replyToEmail: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_id** | [**string**](../Model/)| ID of the email that should be replied to |
+ **reply_to_email_options** | [**\MailSlurp\Models\ReplyToEmailOptions**](../Model/ReplyToEmailOptions)| replyToEmailOptions |
+
+### Return type
+
+[**\MailSlurp\Models\SentEmailDto**](../Model/SentEmailDto)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
+
+## validateEmail
+
+> \MailSlurp\Models\ValidationDto validateEmail($email_id)
+
+Validate email
+
+Validate the HTML content of email if HTML is found. Considered valid if no HTML.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: API_KEY
+$config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = MailSlurp\Configuration::getDefaultConfiguration()->setApiKeyPrefix('x-api-key', 'Bearer');
+
+
+$apiInstance = new MailSlurp\Api\EmailControllerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$email_id = 'email_id_example'; // string | ID of email
+
+try {
+    $result = $apiInstance->validateEmail($email_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EmailControllerApi->validateEmail: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **email_id** | [**string**](../Model/)| ID of email |
+
+### Return type
+
+[**\MailSlurp\Models\ValidationDto**](../Model/ValidationDto)
+
+### Authorization
+
+[API_KEY](../../README#API_KEY)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README#documentation-for-api-endpoints)
+[[Back to Model list]](../../README#documentation-for-models)
+[[Back to README]](../../README)
+
